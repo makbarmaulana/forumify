@@ -8,6 +8,7 @@ import Navbar from '../components/Navigation/NavBar';
 
 function Homepage() {
   const { threads, authUser, users } = useSelector((states) => states);
+
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -4,23 +4,30 @@ import CommentItem from './CommentItem';
 
 function Comments({ comments }) {
   return (
-    <CommentsList>
+    <>
       <TotalComments>
         Replies (
         {comments.length}
         )
       </TotalComments>
+      <CommentsList>
 
-      {comments.map((comment) => (
-        <CommentItem {...comment} key={comment.id} />
-      ))}
-    </CommentsList>
+        {comments.map((comment) => (
+          <CommentItem {...comment} key={comment.id} />
+        ))}
+      </CommentsList>
+    </>
   );
 }
 
 export default Comments;
 
-const CommentsList = styled.div``;
+const CommentsList = styled.div`
+  border-radius: 0.7em;
+  overflow: hidden;
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+
+`;
 const TotalComments = styled.h3`
   margin: 1.5rem 0 1rem;
   font-size: 1rem;

@@ -95,7 +95,7 @@ const ThreadBody = styled.div`
   color: inherit;
   display: inline-block;
   margin-top: 1.2em;
-`;
+  `;
 const ContentTitle = styled.h5`
   font-size: 0.85rem;
   font-weight: 500;
@@ -123,8 +123,10 @@ const Category = styled.span`
 
 const ThreadFooter = styled.div`
   margin-top: 1.2em;
+  padding-left: 0.2em;
   display: flex;
-  gap: 1.5em;
+  gap: 1.3em;
+
 `;
 const VoteButton = styled(Button)`
   font-size: 1rem;

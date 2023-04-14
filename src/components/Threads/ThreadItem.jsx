@@ -106,7 +106,7 @@ const PostedTime = styled.p`
 `;
 const ShareButton = styled(Button)`
   margin-left: auto;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 `;
 
 const ThreadBody = styled.div`
@@ -148,6 +148,7 @@ const Category = styled.span`
 
 const ThreadFooter = styled.div`
   margin-top: 1.2em;
+  padding-left: 0.2em;
   display: flex;
   gap: 1.5em;
   user-select: none;

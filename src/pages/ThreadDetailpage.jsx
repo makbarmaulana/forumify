@@ -10,6 +10,7 @@ import AddComment from '../components/ThreadDetail/AddComment';
 
 function ThreadDetailpage() {
   const { threadDetail, authUser } = useSelector((states) => states);
+
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -25,22 +26,14 @@ function ThreadDetailpage() {
     authUser,
   };
 
-  const commentsList = threadDetail.comments
-    .map((comment) => ({
-      ...comment,
-      authUser,
-      createdAt: new Date(comment.createdAt),
-    }))
-    .sort((a, b) => b.createdAt - a.createdAt);
-
   return (
     <>
       <Header />
       <MainContainer>
         <ThreadDetail {...threadDetailData} />
-        <Comments comments={commentsList} />
+        <Comments comments={threadDetailData.comments} />
       </MainContainer>
-      <AddComment {...authUser} />
+      <AddComment {...threadDetailData} />
     </>
   );
 }

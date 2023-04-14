@@ -9,7 +9,6 @@ import Avatar from '../Styled/Avatar';
 
 function CommentItem({
   // id,
-  title,
   createdAt,
   content,
   upVotesBy,
@@ -19,35 +18,32 @@ function CommentItem({
 }) {
   return (
     <CommentItemWrapper>
-      <CommentHeader>
-        <Avatar src={owner?.avatar} alt={owner?.name} />
+      <ImageBox>
+        <Avatar src={owner?.avatar} alt={owner?.name} width="1.7em" />
+      </ImageBox>
 
-        <User>
-          <Username>{owner?.name}</Username>
-          <PostedTime>{postedAt(createdAt)}</PostedTime>
-        </User>
-      </CommentHeader>
+      <CommentContent>
+        <CommentBody>
+          <User>
+            <Username>{owner?.name}</Username>
+            <PostedTime>{postedAt(createdAt)}</PostedTime>
+          </User>
 
-      <CommentBody>
-        <ContentTitle>{title}</ContentTitle>
-        <Description>{parser(content)}</Description>
-      </CommentBody>
+          <Description>{parser(content)}</Description>
+        </CommentBody>
 
-      <CommentFooter>
-        <VoteButton>
-          <FiThumbsUp />
-          <span>
-            {intToString(upVotesBy.length)}
-          </span>
-        </VoteButton>
+        <CommentFooter>
+          <VoteButton>
+            <FiThumbsUp />
+            <span>{intToString(upVotesBy.length)}</span>
+          </VoteButton>
 
-        <VoteButton>
-          <FiThumbsDown />
-          <span>
-            {intToString(downVotesBy.length)}
-          </span>
-        </VoteButton>
-      </CommentFooter>
+          <VoteButton>
+            <FiThumbsDown />
+            <span>{intToString(downVotesBy.length)}</span>
+          </VoteButton>
+        </CommentFooter>
+      </CommentContent>
     </CommentItemWrapper>
   );
 }
@@ -55,27 +51,28 @@ function CommentItem({
 export default CommentItem;
 
 const CommentItemWrapper = styled.section`
-  padding: 1em 1em 1.5em 1em;
-  gap: 0.5em;
+  padding: 0.8em;
   background-color: #fff;
-  border-radius: 0.7em;
-  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
   border: 1px solid #f5f5f5;
   overflow: hidden;
+  display: flex;
+  gap: 0.5em;
 `;
 
-const CommentHeader = styled.div`
-  display: flex;
-  align-items: flex-start;
-  gap: 0.8em;
+const ImageBox = styled.div``;
+
+const CommentContent = styled.div`
   width: 100%;
 `;
 
+const CommentBody = styled.div``;
+
 const User = styled.div`
   word-break: break-all;
+  gap: 0.4em;
 `;
 const Username = styled.p`
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 500;
 `;
 const PostedTime = styled.p`
@@ -84,20 +81,9 @@ const PostedTime = styled.p`
   color: #757575;
 `;
 
-const CommentBody = styled.div`
-  width: 100%;
-  text-decoration: none;
-  color: inherit;
-  display: inline-block;
-  margin-top: 1.2em;
-`;
-const ContentTitle = styled.h5`
-  font-size: 0.85rem;
-  font-weight: 500;
-`;
 const Description = styled.div`
   margin-top: 0.5em;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 400;
   color: #757575;
 `;
@@ -105,14 +91,14 @@ const Description = styled.div`
 const CommentFooter = styled.div`
   margin-top: 1.2em;
   display: flex;
-  gap: 1.5em;
+  gap: 1em;
 `;
 const VoteButton = styled(Button)`
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 400;
 
   span {
-    font-size: 0.875rem;
+    font-size: 0.85rem;
     font-weight: 400;
   }
 `;
