@@ -1,78 +1,45 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import LoginInput from '../components/LoginInput';
-import { Logo } from '../components/styled/Logo';
+import LoginForm from '../components/AuthForm/LoginForm';
 import { asyncLogin } from '../states/authUser/action';
 
 function Loginpage() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const loginHandler = (loginForm) => {
-    dispatch(asyncLogin(loginForm));
+  const loginHandler = ({ email, password }) => {
+    dispatch(asyncLogin({ email, password }));
+    navigate('/');
   };
 
   return (
-    <Main>
-      <Greeting>
-        <h1>Welcome to</h1>
-        <Logo />
-        <h2>Cuitter</h2>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis
-          nemo reprehenderit at porro nisi officiis minus obcaecati ipsa
-          consectetur quasi.
-        </p>
-      </Greeting>
-      <AuthForm>
-        <h1>Sign In to your account</h1>
-        <LoginInput login={loginHandler} />
-      </AuthForm>
-    </Main>
+    <LoginContainer>
+      <LoginHeader>
+        <Title>
+          Hello,
+          <br />
+          Welcome Back
+        </Title>
+      </LoginHeader>
+
+      <LoginForm login={loginHandler} />
+    </LoginContainer>
   );
 }
 
 export default Loginpage;
 
-const Main = styled.main`
-  min-width: 320px;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 1.5fr 2fr;
-
-  @media screen and (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
+const LoginContainer = styled.section`
+  padding: 0 1.5em;
 `;
 
-const Greeting = styled.section`
-  border: 1px solid red;
-  padding: 3rem 2rem;
-  text-align: center;
-
-  h1 {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 3rem;
-  }
-
-  h2 {
-    margin: 0.5rem auto;
-  }
-
-  p {
-    margin-top: 3rem;
-  }
+const LoginHeader = styled.div`
+  padding: 4em 0;
 `;
-
-const AuthForm = styled.section`
-  border: 1px solid red;
-  padding: 3rem 2rem;
+const Title = styled.h2`
+  font-size: 1.4rem;
+  font-weight: 700;
   text-align: center;
-
-  h1 {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 3rem;
-  }
 `;

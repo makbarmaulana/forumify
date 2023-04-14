@@ -19,6 +19,7 @@
         "react/prop-types": "off",
         "default-param-last": "off",
         "import/prefer-default-export": "off",
-        "react/jsx-props-no-spreading": "off"
+        "react/jsx-props-no-spreading": "off",
+        "no-plusplus": "off"
     }
 }

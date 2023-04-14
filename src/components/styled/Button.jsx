@@ -1,33 +1,41 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import React from 'react';
-
-export function Button(props) {
-  const { type, children } = props;
-  return (
-    <ButtonItem type={type || 'button'} {...props}>
-      {children}
-    </ButtonItem>
-  );
-}
-
-const ButtonItem = styled.button`
-  width: max-content;
-  padding: 6px 14px;
-  border-radius: 4px;
-  border-color: transparent;
-  font-size: 16px;
-  font-weight: 500;
-  background-color: #00aeef;
-  color: #fff;
+const buttonStyles = css`
+  all: unset;
+  color: #757575;
   cursor: pointer;
-  margin: ${({ margin }) => margin};
-
-  :hover {
-    background-color: #0595c9;
-  }
-
-  :disabled {
-    background-color: #c4c4c4;
-  }
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1;
+  transition: all 150ms ease;
 `;
+
+export const Button = styled.button`
+  ${(props) => {
+    switch (props.variant) {
+      case 'primary':
+        return css`
+          ${buttonStyles}
+          padding: 0.6em;
+          color: #fff;
+          background-color: #5d9dfe;
+          border-radius: 0.2em;
+
+          &:hover {
+            background-color: #6da5fa;
+          }
+        `;
+      default:
+        return css`
+          ${buttonStyles}
+          gap: 0.5em;
+          display: flex;
+          align-items: center;
+        `;
+    }
+  }}
+`;
+
+Button.defaultProps = {
+  type: 'button',
+};

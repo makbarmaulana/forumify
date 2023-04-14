@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-export const useInput = (defaultValue = {}) => {
-  const [state, setState] = useState(defaultValue);
+export const useInput = (defaultValue = '') => {
+  const [value, setValue] = useState(defaultValue);
 
-  const onValueChange = ({ target: { name, value } }) => {
-    setState((prevState) => ({ ...prevState, [name]: value }));
+  const onValueChange = ({ target }) => {
+    setValue(target.value);
   };
 
-  return [state, onValueChange, setState];
+  return [value, onValueChange, setValue];
 };

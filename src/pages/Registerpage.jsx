@@ -1,78 +1,43 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import RegisterInput from '../components/RegisterInput';
-import { Logo } from '../components/styled/Logo';
+import RegisterForm from '../components/AuthForm/RegisterForm';
 import { asyncRegister } from '../states/users/actions';
 
 function Registerpage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const registerHandler = (registerForm) => {
-    dispatch(asyncRegister(registerForm));
+  const registerHandler = ({ name, email, password }) => {
+    dispatch(asyncRegister({ name, email, password }));
+    navigate('/login');
   };
 
   return (
-    <Main>
-      <Greeting>
-        <h1>Welcome to</h1>
-        <Logo />
-        <h2>Cuitter</h2>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis
-          nemo reprehenderit at porro nisi officiis minus obcaecati ipsa
-          consectetur quasi.
-        </p>
-      </Greeting>
-      <AuthForm>
-        <h1>Create an account</h1>
-        <RegisterInput register={registerHandler} />
-      </AuthForm>
-    </Main>
+    <RegisterContainer>
+      <RegisterHeader>
+        <Title>
+          Create an Account
+        </Title>
+      </RegisterHeader>
+
+      <RegisterForm register={registerHandler} />
+    </RegisterContainer>
   );
 }
 
 export default Registerpage;
 
-const Main = styled.main`
-  min-width: 320px;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 1.5fr 2fr;
-
-  @media screen and (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
+const RegisterContainer = styled.section`
+  padding: 0 1.5em;
 `;
 
-const Greeting = styled.section`
-  border: 1px solid red;
-  padding: 3rem 2rem;
-  text-align: center;
-
-  h1 {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 3rem;
-  }
-
-  h2 {
-    margin: 0.5rem auto;
-  }
-
-  p {
-    margin-top: 3rem;
-  }
+const RegisterHeader = styled.div`
+  padding: 3em 0;
 `;
-
-const AuthForm = styled.section`
-  border: 1px solid red;
-  padding: 3rem 2rem;
+const Title = styled.h2`
+  font-size: 1.4rem;
+  font-weight: 700;
   text-align: center;
-
-  h1 {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 3rem;
-  }
 `;
