@@ -8,6 +8,7 @@ import Homepage from './pages/Homepage';
 import ThreadDetailpage from './pages/ThreadDetailpage';
 import Loginpage from './pages/Loginpage';
 import Registerpage from './pages/Registerpage';
+import AddThreadpage from './pages/AddThreadpage';
 
 function App() {
   const { isPreload = false } = useSelector((state) => state);
@@ -29,7 +30,7 @@ function App() {
           <Route path="/register" element={<Registerpage />} />
 
           <Route element={<PrivateOutlet />}>
-            {/* <Route path="/threads/new" element={<Addpage />} /> */}
+            <Route path="/new" element={<AddThreadpage />} />
           </Route>
           {/* <Route path="*" element={<Errorpage />} /> */}
         </Route>

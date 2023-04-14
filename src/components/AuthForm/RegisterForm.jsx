@@ -97,7 +97,6 @@ function RegisterForm({ register }) {
 
       <Buttons>
         <RegisterButton
-          type="submit"
           variant="primary"
           onClick={registerHandler}
         >

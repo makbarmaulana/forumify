@@ -55,7 +55,10 @@ function LoginForm({ login }) {
 
       <Buttons>
         <ForgotButton as={NavLink}>Forgot Password ?</ForgotButton>
-        <LoginButton type="submit" variant="primary" onClick={loginHandler}>
+        <LoginButton
+          variant="primary"
+          onClick={loginHandler}
+        >
           Login
         </LoginButton>
         <RegisterButton as={NavLink} to="/register">
@@ -128,7 +131,7 @@ const Buttons = styled.div`
   gap: 2em;
 `;
 const ForgotButton = styled(Button)`
-  margin-top: 1rem;
+  margin-top: 1em;
   align-self: flex-end;
 
   &:hover {
@@ -136,7 +139,7 @@ const ForgotButton = styled(Button)`
   }
 `;
 const LoginButton = styled(Button)`
-  margin-top: 2rem;
+  margin-top: 2em;
   text-transform: uppercase;
 `;
 const RegisterButton = styled(Button)`
