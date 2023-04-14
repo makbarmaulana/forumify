@@ -27,7 +27,7 @@ function Homepage() {
       <MainContainer>
         <Threads threads={threadsList} />
       </MainContainer>
-      <Navbar authUser={authUser} />
+      <Navbar />
     </>
   );
 }

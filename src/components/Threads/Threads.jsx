@@ -17,4 +17,5 @@ export default Threads;
 const ThreadList = styled.div`
   display: grid;
   gap: 1em;
+  margin-bottom: 4em;
 `;

@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { IoArrowBack } from 'react-icons/io5';
-import { useDispatch } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import Navbar from '../components/Navigation/NavBar';
 import { MainContainer } from '../components/Styled/MainContainer';
-import AddThread from '../components/Threads/AddThread';
-import { asyncAddThread } from '../states/threads/actions';
+import { asyncPopulateStates } from '../states/shared/actions';
+import Leaderboards from '../components/Leaderboards/Leaderboards';
 
-function AddThreadpage() {
+function Leaderboardspage() {
+  const { leaderboards } = useSelector((states) => states);
+
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const addThreadHandler = ({ title, category, body }) => {
-    dispatch(asyncAddThread({ title, category, body }));
-    navigate('/');
-  };
+  useEffect(() => {
+    dispatch(asyncPopulateStates());
+  }, [dispatch]);
+
+  if (!leaderboards) return null;
 
   return (
     <>
@@ -23,17 +25,17 @@ function AddThreadpage() {
         <BackToHome to="/">
           <IoArrowBack />
         </BackToHome>
-        <Title>Add Thread</Title>
+        <Title>Leaderboards</Title>
       </Header>
       <MainContainer>
-        <AddThread addThread={addThreadHandler} />
+        <Leaderboards leaderboards={leaderboards} />
       </MainContainer>
       <Navbar />
     </>
   );
 }
 
-export default AddThreadpage;
+export default Leaderboardspage;
 
 const Header = styled.header`
   position: sticky;

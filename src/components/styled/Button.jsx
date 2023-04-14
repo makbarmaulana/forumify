@@ -5,7 +5,7 @@ const buttonStyles = css`
   color: #757575;
   cursor: pointer;
   font-size: 0.8rem;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1;
   transition: all 150ms ease;
 `;
@@ -16,7 +16,7 @@ export const Button = styled.button`
       case 'primary':
         return css`
           ${buttonStyles}
-          padding: 0.6em;
+          padding: 0.8em;
           color: #fff;
           background-color: #5d9dfe;
           border-radius: 0.2em;
@@ -28,9 +28,9 @@ export const Button = styled.button`
       default:
         return css`
           ${buttonStyles}
-          gap: 0.5em;
           display: flex;
           align-items: center;
+          gap: 0.5em;
         `;
     }
   }}

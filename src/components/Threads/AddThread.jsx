@@ -14,49 +14,56 @@ function AddThread({ addThread }) {
   };
 
   return (
-    <FormWrapper>
-      <Label htmlFor="title">Title</Label>
-      <InputField
-        type="text"
-        id="title"
-        value={title}
-        onChange={onTitleChange}
-        required
-      />
+    <Container>
+      <FormWrapper>
+        <Label htmlFor="title">Title</Label>
+        <InputField
+          type="text"
+          id="title"
+          value={title}
+          onChange={onTitleChange}
+          required
+        />
 
-      <Label htmlFor="category">Category</Label>
-      <InputField
-        type="text"
-        id="category"
-        value={category}
-        onChange={onCategoryChange}
-      />
+        <Label htmlFor="category">Category</Label>
+        <InputField
+          type="text"
+          id="category"
+          value={category}
+          onChange={onCategoryChange}
+        />
 
-      <Label htmlFor="body">Description</Label>
-      <Descriptions
-        as="textarea"
-        id="body"
-        value={body}
-        onChange={onBodyChange}
-        required
-      />
+        <Label htmlFor="body">Description</Label>
+        <Descriptions
+          as="textarea"
+          id="body"
+          value={body}
+          onChange={onBodyChange}
+          required
+        />
 
-      <AddButton
-        variant="primary"
-        onClick={addThreadHandler}
-      >
-        ADD
-      </AddButton>
-    </FormWrapper>
+        <AddButton variant="primary" onClick={addThreadHandler}>
+          ADD
+        </AddButton>
+      </FormWrapper>
+    </Container>
   );
 }
 
 export default AddThread;
 
+const Container = styled.div`
+  padding: 1em;
+  background-color: #fff;
+  border-radius: 0.7em;
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f5f5f5;
+  overflow: hidden;
+`;
+
 const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
-  padding: 2em 1.5em;
 `;
 const Label = styled.label`
   display: block;

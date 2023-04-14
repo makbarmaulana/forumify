@@ -3,11 +3,13 @@ import styled from 'styled-components';
 import {
   MdAdd, MdLeaderboard, MdHomeFilled, MdNotifications, MdPerson,
 } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 import { useAuth } from '../../hooks/useAuth';
 import { NavItem } from './NavItem';
 import Avatar from '../Styled/Avatar';
 
-function Navbar({ authUser }) {
+function Navbar() {
+  const { authUser } = useSelector((states) => states);
   const isAuth = useAuth();
 
   return (
