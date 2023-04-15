@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useInput } from '../../hooks/useInput';
 import { Input } from '../Styled/Input';
 import { Button } from '../Styled/Button';
@@ -54,14 +54,14 @@ function LoginForm({ login }) {
       </FormWrapper>
 
       <Buttons>
-        <ForgotButton as={NavLink}>Forgot Password ?</ForgotButton>
+        <ForgotButton as={Link}>Forgot Password ?</ForgotButton>
         <LoginButton
           variant="primary"
           onClick={loginHandler}
         >
           Login
         </LoginButton>
-        <RegisterButton as={NavLink} to="/register">
+        <RegisterButton as={Link} to="/register">
           Create an account
         </RegisterButton>
       </Buttons>

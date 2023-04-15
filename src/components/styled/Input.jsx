@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 
-// const primaryColor = '#f5f5f5';
-// const secondaryColor = '#d6d6d6';
-// const grayColor = '#757575';
-
 export const Input = styled.input`
   width: 100%;
   font-size: 1rem;

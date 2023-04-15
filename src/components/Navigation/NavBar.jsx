@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import {
   MdAdd, MdLeaderboard, MdHomeFilled, MdNotifications, MdPerson,
 } from 'react-icons/md';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../../hooks/useAuth';
 import { NavItem } from './NavItem';
+import { asyncLogOut } from '../../states/authUser/action';
+import { Button } from '../Styled/Button';
 import Avatar from '../Styled/Avatar';
 
 function Navbar() {
   const { authUser } = useSelector((states) => states);
+  const [showLogout, setShowLogout] = useState(false);
+
   const isAuth = useAuth();
+  const dispatch = useDispatch();
+
+  const toggleProfileHandler = () => {
+    setShowLogout(Boolean(!showLogout));
+  };
+
+  const logOutHandler = () => {
+    dispatch(asyncLogOut());
+  };
 
   return (
     <NavBar>
@@ -31,12 +44,12 @@ function Navbar() {
       </Notifications>
 
       {isAuth ? (
-        <Profile to="/maintenance">
-          <Avatar
-            width="1.3em"
-            src={authUser.avatar}
-            alt={authUser.name}
-          />
+        <Profile onClick={toggleProfileHandler}>
+          <Avatar width="1.3em" src={authUser.avatar} alt={authUser.name} />
+
+          <LogOutButton isActive={showLogout} onClick={logOutHandler}>
+            Logout
+          </LogOutButton>
         </Profile>
       ) : (
         <Profile to="/login">
@@ -66,8 +79,10 @@ const NavBar = styled.nav`
   width: 425px;
   margin: auto;
 `;
+
 const Home = styled(NavItem)``;
 const Leaderboards = styled(NavItem)``;
+
 const AddThread = styled(NavItem)`
   border: 1px solid #757575;
   border-radius: 0.5em;
@@ -82,4 +97,33 @@ const AddThread = styled(NavItem)`
   }
 `;
 const Notifications = styled(NavItem)``;
-const Profile = styled(NavItem)``;
+
+const Profile = styled(NavItem)`
+  position: relative;
+`;
+
+const LogOutButton = styled(Button)`
+  position: absolute;
+  top: -180%;
+  right: 0;
+  font-size: 0.75rem;
+  color: #757575;
+  background-color: #fff;
+  border: 1px solid #d6d6d6;
+  border-radius: 0.4em;
+  padding: 0.5em 1em;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 150ms ease;
+
+  &:hover {
+    color: #fff;
+    background-color: #5d9dfe;
+    border-color: currentColor;
+  }
+
+  ${({ isActive }) => isActive && `
+    opacity: 1;
+    visibility: visible;
+  `}
+`;

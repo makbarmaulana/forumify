@@ -1,33 +1,23 @@
-/* eslint-disable no-alert */
 import React, { useState, useEffect } from 'react';
-import parser from 'html-react-parser';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import parser from 'html-react-parser';
+import { Link } from 'react-router-dom';
 import { FiMessageSquare, FiThumbsDown, FiThumbsUp } from 'react-icons/fi';
 import { IoShareSocialOutline } from 'react-icons/io5';
 import { useDispatch } from 'react-redux';
 import { Button } from '../Styled/Button';
 import { intToString } from '../../utils/intToString';
 import { postedAt } from '../../utils/formatDate';
-import Avatar from '../Styled/Avatar';
+import { shareHandler } from '../../utils/shareThread';
 import {
   asyncClearVoteThread,
   asyncDownVoteThread,
   asyncUpVoteThread,
 } from '../../states/threads/actions';
-import { shareHandler } from '../../utils/shareThread';
+import Avatar from '../Styled/Avatar';
 
 function ThreadItem({
-  id,
-  title,
-  createdAt,
-  body,
-  category,
-  upVotesBy,
-  downVotesBy,
-  totalComments,
-  user,
-  authUser,
+  id, title, createdAt, body, category, upVotesBy, downVotesBy, totalComments, user, authUser,
 }) {
   const dispatch = useDispatch();
   const [isLiked, setIsLiked] = useState(false);
@@ -74,7 +64,7 @@ function ThreadItem({
         </ShareButton>
       </ThreadHeader>
 
-      <ThreadBody as={NavLink} to={goToThreadDetail}>
+      <ThreadBody as={Link} to={goToThreadDetail}>
         <ContentTitle>{title}</ContentTitle>
         <Description>{parser(body)}</Description>
 
@@ -94,7 +84,7 @@ function ThreadItem({
           <span>{intToString(downVotesBy.length)}</span>
         </VoteButton>
 
-        <CommentsButton as={NavLink} to={goToThreadDetail}>
+        <CommentsButton as={Link} to={goToThreadDetail}>
           <FiMessageSquare />
           <span>{intToString(totalComments)}</span>
         </CommentsButton>

@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { MainContainer } from '../components/Styled/MainContainer';
+import { useDispatch, useSelector } from 'react-redux';
 import { asyncGetThreadDetail } from '../states/threadDetail/action';
+import { MainContainer } from '../components/Styled/MainContainer';
 import Header from '../components/Header/Header';
 import AppbarOther from '../components/Header/Appbar/AppbarOther';
 import ThreadDetail from '../components/ThreadDetail/ThreadDetail';
-import Comments from '../components/ThreadDetail/Comments';
-import AddComment from '../components/ThreadDetail/AddComment';
+import Comments from '../components/ThreadDetail/Comments/Comments';
+import AddComment from '../components/ThreadDetail/Comments/AddComment';
 
 function ThreadDetailpage() {
   const { threadDetail, authUser } = useSelector((states) => states);

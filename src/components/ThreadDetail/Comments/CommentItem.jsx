@@ -1,24 +1,20 @@
-/* eslint-disable no-alert */
 import React, { useEffect, useState } from 'react';
-import parser from 'html-react-parser';
 import styled from 'styled-components';
-import { FiThumbsDown, FiThumbsUp } from 'react-icons/fi';
+import parser from 'html-react-parser';
 import { useDispatch } from 'react-redux';
-import { intToString } from '../../utils/intToString';
-import { postedAt } from '../../utils/formatDate';
-import { Button } from '../Styled/Button';
-import Avatar from '../Styled/Avatar';
-import { asyncClearVoteComment, asyncDownVoteComment, asyncUpVoteComment } from '../../states/threadDetail/action';
+import { FiThumbsDown, FiThumbsUp } from 'react-icons/fi';
+import { intToString } from '../../../utils/intToString';
+import { postedAt } from '../../../utils/formatDate';
+import { Button } from '../../Styled/Button';
+import {
+  asyncClearVoteComment,
+  asyncDownVoteComment,
+  asyncUpVoteComment,
+} from '../../../states/threadDetail/action';
+import Avatar from '../../Styled/Avatar';
 
 function CommentItem({
-  commentId,
-  threadId,
-  createdAt,
-  content,
-  upVotesBy,
-  downVotesBy,
-  owner,
-  authUser,
+  commentId, threadId, createdAt, content, upVotesBy, downVotesBy, owner, authUser,
 }) {
   const dispatch = useDispatch();
   const [isLiked, setIsLiked] = useState(false);

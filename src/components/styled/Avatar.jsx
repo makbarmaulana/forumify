@@ -17,7 +17,7 @@ const AvatarWrapper = styled.div`
 `;
 
 const Image = styled.img`
-  width: ${({ width }) => width || '2.5em'};
+  width: ${({ width }) => width || '2.2em'};
   border-radius: ${({ bdRad }) => bdRad || '50%'};
   aspect-ratio: 1 / 1;
   object-fit: cover;

@@ -56,7 +56,7 @@ const SearchBar = styled.div`
   position: relative;
   display: flex;
   justify-content: flex-end;
-  min-width: 125px;
+  min-width: 150px;
   width: 30%;
 
   input:focus ~ button {

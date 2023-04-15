@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 export const shareHandler = async ({ title, id }) => {
   if (!navigator.share) {
     alert('Web Share API not supported');

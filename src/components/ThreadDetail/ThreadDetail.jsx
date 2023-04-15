@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import React, { useState, useEffect } from 'react';
 import parser from 'html-react-parser';
 import styled from 'styled-components';
@@ -17,15 +16,7 @@ import {
 } from '../../states/threadDetail/action';
 
 function ThreadDetail({
-  id,
-  title,
-  createdAt,
-  body,
-  category,
-  upVotesBy,
-  downVotesBy,
-  user,
-  authUser,
+  id, title, createdAt, body, category, upVotesBy, downVotesBy, user, authUser,
 }) {
   const dispatch = useDispatch();
   const [isLiked, setIsLiked] = useState(false);

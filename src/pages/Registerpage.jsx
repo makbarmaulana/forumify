@@ -1,9 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import RegisterForm from '../components/AuthForm/RegisterForm';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { asyncRegister } from '../states/users/actions';
+import RegisterForm from '../components/AuthForm/RegisterForm';
 
 function Registerpage() {
   const dispatch = useDispatch();

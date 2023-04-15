@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useInput } from '../../hooks/useInput';
 import { Input } from '../Styled/Input';
 import { Button } from '../Styled/Button';
@@ -102,7 +102,7 @@ function RegisterForm({ register }) {
         >
           Register
         </RegisterButton>
-        <LoginButton as={NavLink} to="/login">
+        <LoginButton as={Link} to="/login">
           Have an account ?
         </LoginButton>
       </Buttons>

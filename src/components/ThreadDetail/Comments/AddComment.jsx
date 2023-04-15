@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { FiSend } from 'react-icons/fi';
 import { useDispatch } from 'react-redux';
-import { useInput } from '../../hooks/useInput';
-import { Input } from '../Styled/Input';
-import { Button } from '../Styled/Button';
-import { asyncAddComment } from '../../states/threadDetail/action';
-import Avatar from '../Styled/Avatar';
+import { useInput } from '../../../hooks/useInput';
+import { Input } from '../../Styled/Input';
+import { Button } from '../../Styled/Button';
+import { asyncAddComment } from '../../../states/threadDetail/action';
+import Avatar from '../../Styled/Avatar';
 
 function AddComment({ authUser, id: threadId }) {
   const [content, onContentChange, setContent] = useInput('');

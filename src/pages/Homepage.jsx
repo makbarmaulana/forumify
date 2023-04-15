@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { MainContainer } from '../components/Styled/MainContainer';
+import { useDispatch, useSelector } from 'react-redux';
 import { asyncPopulateStates } from '../states/shared/actions';
+import { MainContainer } from '../components/Styled/MainContainer';
+import { Button } from '../components/Styled/Button';
 import Header from '../components/Header/Header';
 import AppbarHome from '../components/Header/Appbar/AppbarHome';
 import Category from '../components/Header/Categories/Category';
 import Threads from '../components/Threads/Threads';
 import Navbar from '../components/Navigation/NavBar';
-import { Button } from '../components/Styled/Button';
 
 function Homepage() {
   const { threads = [], authUser, users } = useSelector((states) => states);
