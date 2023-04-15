@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function Categories() {
+function Category() {
   const categories = [
     'introduction',
     'react',
@@ -19,7 +19,7 @@ function Categories() {
   );
 }
 
-export default Categories;
+export default Category;
 
 const CategoryList = styled.div`
   display: flex;

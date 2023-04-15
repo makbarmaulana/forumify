@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { MainContainer } from '../components/Styled/MainContainer';
 import { asyncGetThreadDetail } from '../states/threadDetail/action';
 import Header from '../components/Header/Header';
+import AppbarOther from '../components/Header/Appbar/AppbarOther';
 import ThreadDetail from '../components/ThreadDetail/ThreadDetail';
 import Comments from '../components/ThreadDetail/Comments';
 import AddComment from '../components/ThreadDetail/AddComment';
@@ -28,11 +29,15 @@ function ThreadDetailpage() {
 
   return (
     <>
-      <Header />
+      <Header>
+        <AppbarOther title="Comments" />
+      </Header>
+
       <MainContainer>
         <ThreadDetail {...threadDetailData} />
         <Comments threadDetail={threadDetailData} />
       </MainContainer>
+
       <AddComment {...threadDetailData} />
     </>
   );

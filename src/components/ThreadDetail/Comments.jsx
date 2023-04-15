@@ -8,10 +8,13 @@ function Comments({ threadDetail }) {
   return (
     <>
       <TotalComments>
-        Replies (
+        Replies
+        {' '}
+        (
         {comments.length}
         )
       </TotalComments>
+
       <CommentsList>
         {comments.map((comment) => (
           <CommentItem

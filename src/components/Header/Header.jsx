@@ -1,16 +1,10 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import Appbar from './Appbar';
-import Category from './Categories/Categories';
 
-function Header() {
-  const { pathname } = useLocation();
-
+function Header({ children }) {
   return (
     <HeaderContainer>
-      <Appbar pathname={pathname} />
-      {pathname === '/' && <Category />}
+      {children}
     </HeaderContainer>
   );
 }
