@@ -4,9 +4,9 @@ import { FiSend } from 'react-icons/fi';
 import { useDispatch } from 'react-redux';
 import { useInput } from '../../hooks/useInput';
 import { Input } from '../Styled/Input';
-import Avatar from '../Styled/Avatar';
 import { Button } from '../Styled/Button';
 import { asyncAddComment } from '../../states/threadDetail/action';
+import Avatar from '../Styled/Avatar';
 
 function AddComment({ authUser, id: threadId }) {
   const [content, onContentChange, setContent] = useInput('');
@@ -37,9 +37,9 @@ function AddComment({ authUser, id: threadId }) {
       />
 
       {content && (
-      <AddButton onClick={addCommentHandler}>
-        <FiSend />
-      </AddButton>
+        <AddButton onClick={addCommentHandler}>
+          <FiSend />
+        </AddButton>
       )}
     </AddCommentWrapper>
   );
@@ -60,6 +60,9 @@ const AddCommentWrapper = styled.div`
   background: #fff;
   border-top: 1px solid #d6d6d6;
   z-index: 2;
+  // delete this
+  width: 425px;
+  margin: auto;
 `;
 
 const AddCommentInput = styled(Input)`
