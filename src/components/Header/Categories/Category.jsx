@@ -1,19 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Button } from '../../Styled/Button';
 
-function Category() {
-  const categories = [
-    'introduction',
-    'react',
-    'redux',
-    'cicd',
-    'styled-component',
-  ];
+function Category({ threads, keyword, activeCategory }) {
+  const categories = [...new Set(threads.map((thread) => thread.category))];
+
+  const categoryHandler = (e) => {
+    keyword(e.target.textContent);
+  };
 
   return (
     <CategoryList>
-      {categories.map((cat) => (
-        <CategoryItem key={cat}>{cat}</CategoryItem>
+      <CategoryItem
+        onClick={() => keyword('')}
+        isActive={activeCategory === ''}
+      >
+        All
+      </CategoryItem>
+
+      {categories.map((category) => (
+        <CategoryItem
+          key={category}
+          onClick={categoryHandler}
+          isActive={category === activeCategory}
+        >
+          {category}
+        </CategoryItem>
       ))}
     </CategoryList>
   );
@@ -25,7 +37,8 @@ const CategoryList = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5em;
-  padding: 0 1em 1em 1em;
+  margin-top: 0.8em;
+  margin-bottom: 0.5em;
   -ms-overflow-style: none;
   scrollbar-width: none;
   overflow-x: scroll;
@@ -34,20 +47,27 @@ const CategoryList = styled.div`
   }
 `;
 
-const CategoryItem = styled.span`
-  white-space: nowrap;
-  font-size: 0.85rem;
+const CategoryItem = styled(Button)`
+  font-size: 0.75rem;
   font-weight: 500;
   color: #525252;
   border: 2px solid #bfc2c5;
   border-radius: 2em;
-  padding: 0.3em 0.8em;
-  user-select: none;
-  cursor: pointer;
+  padding: 0.5em 0.8em;
 
   &:hover {
-    border-color: #343B4B;
-    background-color: #343B4B;
-    color: #f2f2f2;
+    color: #343b4b;
+    border-color: #343b4b;
   }
+
+  ${({ isActive }) => isActive
+    && `
+    border-color: #343b4b;
+    background-color: #343b4b;
+    color: #f2f2f2;
+
+    &:hover {
+      color: #f2f2f2;
+    }
+  `}
 `;

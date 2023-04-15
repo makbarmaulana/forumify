@@ -40,7 +40,7 @@ const CommentsList = styled.div`
 `;
 const TotalComments = styled.h3`
   margin: 1.5rem 0 1rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   user-select: none;
 `;

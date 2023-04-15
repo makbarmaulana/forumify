@@ -18,4 +18,5 @@ const HeaderContainer = styled.header`
   left: 0;
   background-color: #fff;
   box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+  padding: 0.5em 1em;
 `;

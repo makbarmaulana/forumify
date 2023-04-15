@@ -108,7 +108,7 @@ const Username = styled.p`
   font-weight: 500;
 `;
 const PostedTime = styled.p`
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 400;
   color: #757575;
 `;
@@ -126,7 +126,7 @@ const CommentFooter = styled.div`
   gap: 1em;
 `;
 const VoteButton = styled(Button)`
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 400;
 
   span {

@@ -126,11 +126,11 @@ const User = styled.div`
   word-break: break-all;
 `;
 const Username = styled.p`
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 500;
 `;
 const PostedTime = styled.p`
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 400;
   color: #757575;
 `;
@@ -147,12 +147,12 @@ const ThreadBody = styled.div`
   margin-top: 1.2em;
 `;
 const ContentTitle = styled.h5`
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 500;
 `;
 const Description = styled.div`
   margin-top: 0.5em;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 400;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -168,12 +168,12 @@ const CategoryList = styled.div`
   gap: 0.2em;
 `;
 const Category = styled.span`
+  font-size: 0.8rem;
   color: #757575;
   background-color: #f5f5f5;
   border: 1px solid #d6d6d6;
   border-radius: 0.4em;
   padding: 0.125em 0.5em;
-  font-size: 0.85rem;
 `;
 
 const ThreadFooter = styled.div`
@@ -188,7 +188,7 @@ const VoteButton = styled(Button)`
   font-weight: 400;
 
   span {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     font-weight: 400;
   }
 `;
@@ -197,7 +197,7 @@ const CommentsButton = styled(Button)`
   font-weight: 400;
 
   span {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     font-weight: 400;
   }
 `;

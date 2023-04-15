@@ -21,7 +21,7 @@ const AppBarWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  padding: 0.8em 1em;
+  padding: 0.3em 0 ;
 `;
 
 const BackToHome = styled(Link)`
