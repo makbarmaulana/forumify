@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import CommentItem from './CommentItem';
 
-function Comments({ comments }) {
+function Comments({ threadDetail }) {
+  const { comments, authUser } = threadDetail;
+
   return (
     <>
       <TotalComments>
@@ -11,9 +13,14 @@ function Comments({ comments }) {
         )
       </TotalComments>
       <CommentsList>
-
         {comments.map((comment) => (
-          <CommentItem {...comment} key={comment.id} />
+          <CommentItem
+            {...comment}
+            key={comment.id}
+            commentId={comment.id}
+            threadId={threadDetail.id}
+            authUser={authUser}
+          />
         ))}
       </CommentsList>
     </>

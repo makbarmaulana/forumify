@@ -31,7 +31,7 @@ function ThreadDetailpage() {
       <Header />
       <MainContainer>
         <ThreadDetail {...threadDetailData} />
-        <Comments comments={threadDetailData.comments} />
+        <Comments threadDetail={threadDetailData} />
       </MainContainer>
       <AddComment {...threadDetailData} />
     </>
