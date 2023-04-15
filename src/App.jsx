@@ -51,6 +51,7 @@ const AppContainer = styled.div`
   min-height: 100vh;
   // delete this
   width: 425px;
-  display: grid;
   margin: auto;
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+  outline: 1px solid #f5f5f5;
 `;

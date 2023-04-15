@@ -22,9 +22,11 @@ function AddThreadpage() {
       <Header>
         <AppbarOther title="Add New Thread" />
       </Header>
+
       <MainContainer>
         <AddThread addThread={addThreadHandler} />
       </MainContainer>
+
       <Navbar />
     </>
   );
