@@ -14,7 +14,7 @@ function AppbarHome({ keyword }) {
 
   return (
     <AppBarWrapper>
-      <Brand to="/">forum.</Brand>
+      <Brand to="/">forumify.</Brand>
 
       <SearchBar>
         <SearchInput
