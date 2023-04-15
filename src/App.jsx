@@ -10,6 +10,8 @@ import Loginpage from './pages/Loginpage';
 import Registerpage from './pages/Registerpage';
 import AddThreadpage from './pages/AddThreadpage';
 import Leaderboardspage from './pages/Leaderboardspage';
+import Maintenancepage from './pages/Maintenancepage';
+import Errorpage from './pages/Errorpage';
 
 function App() {
   const { isPreload = false } = useSelector((state) => state);
@@ -30,11 +32,12 @@ function App() {
           <Route path="/leaderboards" element={<Leaderboardspage />} />
           <Route path="/login" element={<Loginpage />} />
           <Route path="/register" element={<Registerpage />} />
+          <Route path="/maintenance" element={<Maintenancepage />} />
+          <Route path="*" element={<Errorpage />} />
 
           <Route element={<PrivateOutlet />}>
             <Route path="/new" element={<AddThreadpage />} />
           </Route>
-          {/* <Route path="*" element={<Errorpage />} /> */}
         </Route>
       </Routes>
     </AppContainer>
@@ -46,4 +49,8 @@ export default App;
 const AppContainer = styled.div`
   position: relative;
   min-height: 100vh;
+  // delete this
+  width: 425px;
+  display: grid;
+  margin: auto;
 `;

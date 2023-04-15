@@ -26,12 +26,12 @@ function Navbar() {
         <MdAdd />
       </AddThread>
 
-      <Notifications to="/notifications">
+      <Notifications to="/maintenance">
         <MdNotifications />
       </Notifications>
 
       {isAuth ? (
-        <Profile to="/profile">
+        <Profile to="/maintenance">
           <Avatar
             width="1.3em"
             src={authUser.avatar}
@@ -62,6 +62,9 @@ const NavBar = styled.nav`
   padding: 0.5rem;
   background: #fff;
   box-shadow: 0px -2px 8px 0px rgba(0, 0, 0, 0.1);
+  // delete this
+  width: 425px;
+  margin: auto;
 `;
 const Home = styled(NavItem)``;
 const Leaderboards = styled(NavItem)``;

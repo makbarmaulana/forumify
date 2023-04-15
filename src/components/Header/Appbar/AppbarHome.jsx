@@ -42,7 +42,6 @@ const AppBarWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 0.5em;
 `;
 
 const Brand = styled(NavLink)`
