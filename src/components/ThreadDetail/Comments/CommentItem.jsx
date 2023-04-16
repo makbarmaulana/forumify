@@ -2,16 +2,15 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import parser from 'html-react-parser';
 import { useDispatch } from 'react-redux';
-import { FiThumbsDown, FiThumbsUp } from 'react-icons/fi';
-import { intToString } from '../../../utils/intToString';
+import { HiArrowDown, HiArrowUp } from 'react-icons/hi';
 import { postedAt } from '../../../utils/formatDate';
-import { Button } from '../../Styled/Button';
 import {
   asyncClearVoteComment,
   asyncDownVoteComment,
   asyncUpVoteComment,
 } from '../../../states/threadDetail/action';
 import Avatar from '../../Styled/Avatar';
+import VoteButton from '../../Styled/VoteButton';
 
 function CommentItem({
   commentId, threadId, createdAt, content, upVotesBy, downVotesBy, owner, authUser,
@@ -61,15 +60,21 @@ function CommentItem({
         </CommentBody>
 
         <CommentFooter>
-          <VoteButton onClick={() => voteHandler('upvote')}>
-            <FiThumbsUp style={isLiked && { fill: 'red' }} />
-            <span>{intToString(upVotesBy.length)}</span>
-          </VoteButton>
+          <Votes>
+            <VoteButton
+              icon={<HiArrowUp />}
+              isVoted={isLiked}
+              label={upVotesBy.length}
+              onClick={() => voteHandler('upvote')}
+            />
 
-          <VoteButton onClick={() => voteHandler('downvote')}>
-            <FiThumbsDown style={isDisliked && { fill: 'red' }} />
-            <span>{intToString(downVotesBy.length)}</span>
-          </VoteButton>
+            <VoteButton
+              icon={<HiArrowDown />}
+              isVoted={isDisliked}
+              label={downVotesBy.length}
+              onClick={() => voteHandler('downvote')}
+            />
+          </Votes>
         </CommentFooter>
       </CommentContent>
     </CommentItemWrapper>
@@ -119,14 +124,10 @@ const Description = styled.div`
 const CommentFooter = styled.div`
   margin-top: 1.2em;
   display: flex;
-  gap: 1em;
-`;
-const VoteButton = styled(Button)`
-  font-size: 0.8rem;
-  font-weight: 400;
+  user-select: none;
+  `;
 
-  span {
-    font-size: 0.75rem;
-    font-weight: 400;
-  }
+const Votes = styled.div`
+  display: flex;
+  gap: 1em;
 `;

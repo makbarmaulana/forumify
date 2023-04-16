@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import parser from 'html-react-parser';
 import styled from 'styled-components';
-import { FiThumbsDown, FiThumbsUp } from 'react-icons/fi';
 import { IoShareSocialOutline } from 'react-icons/io5';
 import { useDispatch } from 'react-redux';
-import { intToString } from '../../utils/intToString';
+import { HiArrowDown, HiArrowUp } from 'react-icons/hi';
 import { postedAt } from '../../utils/formatDate';
 import { Button } from '../Styled/Button';
-import Avatar from '../Styled/Avatar';
 import { shareHandler } from '../../utils/shareThread';
 import {
   asyncClearVoteThreadDetail,
   asyncDownVoteThreadDetail,
   asyncUpVoteThreadDetail,
 } from '../../states/threadDetail/action';
+import Avatar from '../Styled/Avatar';
+import VoteButton from '../Styled/VoteButton';
 
 function ThreadDetail({
   id, title, createdAt, body, category, upVotesBy, downVotesBy, user, authUser,
@@ -71,15 +71,21 @@ function ThreadDetail({
       </ThreadBody>
 
       <ThreadFooter>
-        <VoteButton onClick={() => voteHandler('upvote')}>
-          <FiThumbsUp style={isLiked && { fill: 'red' }} />
-          <span>{intToString(upVotesBy.length)}</span>
-        </VoteButton>
+        <Votes>
+          <VoteButton
+            icon={<HiArrowUp />}
+            isVoted={isLiked}
+            label={upVotesBy.length}
+            onClick={() => voteHandler('upvote')}
+          />
 
-        <VoteButton onClick={() => voteHandler('downvote')}>
-          <FiThumbsDown style={isDisliked && { fill: 'red' }} />
-          <span>{intToString(downVotesBy.length)}</span>
-        </VoteButton>
+          <VoteButton
+            icon={<HiArrowDown />}
+            isVoted={isDisliked}
+            label={downVotesBy.length}
+            onClick={() => voteHandler('downvote')}
+          />
+        </Votes>
       </ThreadFooter>
     </ThreadDetailWrapper>
   );
@@ -155,16 +161,12 @@ const Category = styled.span`
 
 const ThreadFooter = styled.div`
   margin-top: 1.2em;
-  padding-left: 0.2em;
+  padding: 0 0.2em;
   display: flex;
-  gap: 1.3em;
-`;
-const VoteButton = styled(Button)`
-  font-size: 1rem;
-  font-weight: 400;
+  user-select: none;
+  `;
 
-  span {
-    font-size: 0.8rem;
-    font-weight: 400;
-  }
+const Votes = styled.div`
+  display: flex;
+  gap: 1em;
 `;

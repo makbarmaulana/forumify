@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import parser from 'html-react-parser';
 import { Link } from 'react-router-dom';
-import { FiMessageSquare, FiThumbsDown, FiThumbsUp } from 'react-icons/fi';
+import { FiMessageSquare } from 'react-icons/fi';
+import { HiArrowUp, HiArrowDown } from 'react-icons/hi';
 import { IoShareSocialOutline } from 'react-icons/io5';
 import { useDispatch } from 'react-redux';
 import { Button } from '../Styled/Button';
-import { intToString } from '../../utils/intToString';
 import { postedAt } from '../../utils/formatDate';
 import { shareHandler } from '../../utils/shareThread';
 import {
@@ -15,6 +15,8 @@ import {
   asyncUpVoteThread,
 } from '../../states/threads/actions';
 import Avatar from '../Styled/Avatar';
+import VoteButton from '../Styled/VoteButton';
+import CommentButton from '../Styled/CommentButton';
 
 function ThreadItem({
   id, title, createdAt, body, category, upVotesBy, downVotesBy, totalComments, user, authUser,
@@ -64,9 +66,9 @@ function ThreadItem({
         </ShareButton>
       </ThreadHeader>
 
-      <ThreadBody as={Link} to={goToThreadDetail}>
-        <ContentTitle>{title}</ContentTitle>
-        <Description>{parser(body)}</Description>
+      <ThreadBody>
+        <ContentTitle to={goToThreadDetail}>{title}</ContentTitle>
+        <Description to={goToThreadDetail}>{parser(body)}</Description>
 
         <CategoryList>
           <Category>{category}</Category>
@@ -74,20 +76,27 @@ function ThreadItem({
       </ThreadBody>
 
       <ThreadFooter>
-        <VoteButton onClick={() => voteHandler('upvote')}>
-          <FiThumbsUp style={isLiked && { fill: 'red' }} />
-          <span>{intToString(upVotesBy.length)}</span>
-        </VoteButton>
+        <Votes>
+          <VoteButton
+            icon={<HiArrowUp />}
+            isVoted={isLiked}
+            label={upVotesBy.length}
+            onClick={() => voteHandler('upvote')}
+          />
 
-        <VoteButton onClick={() => voteHandler('downvote')}>
-          <FiThumbsDown style={isDisliked && { fill: 'red' }} />
-          <span>{intToString(downVotesBy.length)}</span>
-        </VoteButton>
+          <VoteButton
+            icon={<HiArrowDown />}
+            isVoted={isDisliked}
+            label={downVotesBy.length}
+            onClick={() => voteHandler('downvote')}
+          />
+        </Votes>
 
-        <CommentsButton as={Link} to={goToThreadDetail}>
-          <FiMessageSquare />
-          <span>{intToString(totalComments)}</span>
-        </CommentsButton>
+        <CommentButton
+          to={goToThreadDetail}
+          icon={<FiMessageSquare />}
+          label={totalComments}
+        />
       </ThreadFooter>
     </ThreadWrapper>
   );
@@ -136,11 +145,11 @@ const ThreadBody = styled.div`
   display: inline-block;
   margin-top: 1.2em;
 `;
-const ContentTitle = styled.h5`
+const ContentTitle = styled(Link)`
   font-size: 0.8rem;
   font-weight: 500;
 `;
-const Description = styled.div`
+const Description = styled(Link)`
   margin-top: 0.5em;
   font-size: 0.8rem;
   font-weight: 400;
@@ -168,26 +177,13 @@ const Category = styled.span`
 
 const ThreadFooter = styled.div`
   margin-top: 1.2em;
-  padding-left: 0.2em;
+  padding: 0 0.2em;
   display: flex;
-  gap: 1.5em;
+  justify-content: space-between;
   user-select: none;
-`;
-const VoteButton = styled(Button)`
-  font-size: 1rem;
-  font-weight: 400;
+  `;
 
-  span {
-    font-size: 0.8rem;
-    font-weight: 400;
-  }
-`;
-const CommentsButton = styled(Button)`
-  font-size: 1rem;
-  font-weight: 400;
-
-  span {
-    font-size: 0.8rem;
-    font-weight: 400;
-  }
+const Votes = styled.div`
+  display: flex;
+  gap: 1em;
 `;
