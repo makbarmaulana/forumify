@@ -129,9 +129,6 @@ const ShareButton = styled(Button)`
 
 const ThreadBody = styled.div`
   width: 100%;
-  text-decoration: none;
-  color: inherit;
-  display: inline-block;
   margin-top: 1.2em;
 `;
 const ContentTitle = styled.h5`

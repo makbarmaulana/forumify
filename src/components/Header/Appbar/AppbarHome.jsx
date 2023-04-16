@@ -47,8 +47,6 @@ const AppBarWrapper = styled.div`
 const Brand = styled(NavLink)`
   font-size: 1.2rem;
   font-weight: 600;
-  color: inherit;
-  text-decoration: none;
   user-select: none;
 `;
 

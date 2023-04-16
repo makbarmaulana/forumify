@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { IoArrowBack } from 'react-icons/io5';
+import { StyledLink } from '../../Styled/StyledLink';
 
 function AppbarOther({ title }) {
   return (
@@ -24,10 +24,9 @@ const AppBarWrapper = styled.div`
   padding: 0.3em 0 ;
 `;
 
-const BackToHome = styled(Link)`
+const BackToHome = styled(StyledLink)`
   font-size: 1.2rem;
   color: #757575;
-  text-decoration: none;
 `;
 
 const Title = styled.h3`

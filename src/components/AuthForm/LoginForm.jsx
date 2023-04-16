@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
 import { useInput } from '../../hooks/useInput';
 import { Input } from '../Styled/Input';
 import { Button } from '../Styled/Button';
+import { StyledLink } from '../Styled/StyledLink';
 
 function LoginForm({ login }) {
   const [email, onEmailChange] = useInput('');
@@ -54,14 +54,15 @@ function LoginForm({ login }) {
       </FormWrapper>
 
       <Buttons>
-        <ForgotButton as={Link}>Forgot Password ?</ForgotButton>
+        <ForgotButton>Forgot Password ?</ForgotButton>
         <LoginButton
           variant="primary"
           onClick={loginHandler}
         >
           Login
         </LoginButton>
-        <RegisterButton as={Link} to="/register">
+
+        <RegisterButton to="/register">
           Create an account
         </RegisterButton>
       </Buttons>
@@ -128,24 +129,16 @@ const Buttons = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
-  gap: 2em;
+  gap: 1.5em;
 `;
-const ForgotButton = styled(Button)`
+const ForgotButton = styled(StyledLink)`
   margin-top: 1em;
   align-self: flex-end;
-
-  &:hover {
-    color: #5d9dfe;
-  }
 `;
 const LoginButton = styled(Button)`
   margin-top: 2em;
   text-transform: uppercase;
 `;
-const RegisterButton = styled(Button)`
+const RegisterButton = styled(StyledLink)`
   align-self: center;
-
-  &:hover {
-    color: #5d9dfe;
-  }
 `;

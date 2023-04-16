@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
 import { useInput } from '../../hooks/useInput';
 import { Input } from '../Styled/Input';
 import { Button } from '../Styled/Button';
+import { StyledLink } from '../Styled/StyledLink';
 
 function RegisterForm({ register }) {
   const [name, onNameChange] = useInput('');
@@ -90,7 +90,7 @@ function RegisterForm({ register }) {
         </PasswordWrapper>
         {errorMsg && (
           <ErrorMessage>
-            The password confirmation doens&apos;t match.
+            The password confirmation doesn&apos;t match.
           </ErrorMessage>
         )}
       </FormWrapper>
@@ -102,7 +102,7 @@ function RegisterForm({ register }) {
         >
           Register
         </RegisterButton>
-        <LoginButton as={Link} to="/login">
+        <LoginButton to="/login">
           Have an account ?
         </LoginButton>
       </Buttons>
@@ -175,16 +175,12 @@ const Buttons = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
-  gap: 2em;
+  gap: 1.5em;
 `;
 const RegisterButton = styled(Button)`
   margin-top: 3em;
   text-transform: uppercase;
 `;
-const LoginButton = styled(Button)`
+const LoginButton = styled(StyledLink)`
   align-self: center;
-
-  &:hover {
-    color: #5d9dfe;
-  }
 `;

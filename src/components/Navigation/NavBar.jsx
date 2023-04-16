@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import {
-  MdAdd, MdLeaderboard, MdHomeFilled, MdNotifications, MdPerson,
-} from 'react-icons/md';
+  FiHome, FiUsers, FiPlus, FiBell, FiUser,
+} from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../../hooks/useAuth';
 import { NavItem } from './NavItem';
@@ -28,32 +28,32 @@ function Navbar() {
   return (
     <NavBar>
       <Home to="/">
-        <MdHomeFilled />
+        <FiHome />
       </Home>
 
       <Leaderboards to="/leaderboards">
-        <MdLeaderboard />
+        <FiUsers />
       </Leaderboards>
 
       <AddThread to="/new">
-        <MdAdd />
+        <FiPlus />
       </AddThread>
 
       <Notifications to="/maintenance">
-        <MdNotifications />
+        <FiBell />
       </Notifications>
 
       {isAuth ? (
         <Profile onClick={toggleProfileHandler}>
           <Avatar width="1.3em" src={authUser.avatar} alt={authUser.name} />
 
-          <LogOutButton isActive={showLogout} onClick={logOutHandler}>
+          <LogOutButton toggle={showLogout} onClick={logOutHandler}>
             Logout
           </LogOutButton>
         </Profile>
       ) : (
         <Profile to="/login">
-          <MdPerson />
+          <FiUser />
         </Profile>
       )}
     </NavBar>
@@ -72,7 +72,7 @@ const NavBar = styled.nav`
   align-items: center;
   justify-content: space-evenly;
   gap: 1rem;
-  padding: 0.5rem;
+  padding: 0.7rem;
   background: #fff;
   box-shadow: 0px -2px 8px 0px rgba(0, 0, 0, 0.1);
   // delete this
@@ -89,7 +89,8 @@ const AddThread = styled(NavItem)`
   padding: 0.1em;
 
   &:hover {
-    background-color: #757575;
+    border-Color: #6465D0;
+    background-color: #6465D0;
 
     svg {
       color: #fff;
@@ -122,7 +123,7 @@ const LogOutButton = styled(Button)`
     border-color: currentColor;
   }
 
-  ${({ isActive }) => isActive && `
+  ${({ toggle }) => toggle && `
     opacity: 1;
     visibility: visible;
   `}
