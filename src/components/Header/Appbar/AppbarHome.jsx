@@ -68,7 +68,7 @@ const SearchInput = styled(Input)`
   font-size: 0.8rem;
   border-radius: 3em;
   margin-right: 0.3em;
-  transition: all ease 0.2s;
+  transition: all 200ms ease;
   cursor: pointer;
   padding: 0.4em 2em 0.4em 1em;
 

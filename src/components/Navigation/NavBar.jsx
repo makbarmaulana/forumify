@@ -25,6 +25,12 @@ function Navbar() {
     dispatch(asyncLogOut());
   };
 
+  const addHandler = () => {
+    if (!isAuth) {
+      alert('Please login first');
+    }
+  };
+
   return (
     <NavBar>
       <Home to="/">
@@ -35,7 +41,7 @@ function Navbar() {
         <FiUsers />
       </Leaderboards>
 
-      <AddThread to="/new">
+      <AddThread to={isAuth && '/new'} onClick={addHandler}>
         <FiPlus />
       </AddThread>
 
@@ -47,7 +53,11 @@ function Navbar() {
         <Profile onClick={toggleProfileHandler}>
           <Avatar width="1.3em" src={authUser.avatar} alt={authUser.name} />
 
-          <LogOutButton toggle={showLogout} onClick={logOutHandler}>
+          <LogOutButton
+            variant="secondary"
+            toggle={showLogout}
+            onClick={logOutHandler}
+          >
             Logout
           </LogOutButton>
         </Profile>
@@ -73,7 +83,7 @@ const NavBar = styled.nav`
   justify-content: space-evenly;
   gap: 1rem;
   padding: 0.7rem;
-  background: #fff;
+  background-color: #fff;
   box-shadow: 0px -2px 8px 0px rgba(0, 0, 0, 0.1);
   // delete this
   width: 425px;
@@ -84,17 +94,16 @@ const Home = styled(NavItem)``;
 const Leaderboards = styled(NavItem)``;
 
 const AddThread = styled(NavItem)`
-  border: 1px solid #757575;
   border-radius: 0.5em;
   padding: 0.1em;
+  background-color: #6465d0;
 
   &:hover {
-    border-Color: #6465D0;
-    background-color: #6465D0;
+    background-color: #7a7ce4;
+  }
 
-    svg {
-      color: #fff;
-    }
+  svg {
+    color: #fff !important;
   }
 `;
 const Notifications = styled(NavItem)``;
@@ -104,26 +113,15 @@ const Profile = styled(NavItem)`
 `;
 
 const LogOutButton = styled(Button)`
-  position: absolute;
-  top: -180%;
-  right: 0;
-  font-size: 0.75rem;
-  color: #757575;
-  background-color: #fff;
-  border: 1px solid #d6d6d6;
-  border-radius: 0.4em;
   padding: 0.5em 1em;
+  position: absolute;
+  top: -200%;
+  right: 0;
   opacity: 0;
   visibility: hidden;
-  transition: all 150ms ease;
 
-  &:hover {
-    color: #fff;
-    background-color: #5d9dfe;
-    border-color: currentColor;
-  }
-
-  ${({ toggle }) => toggle && `
+  ${({ toggle }) => toggle
+    && `
     opacity: 1;
     visibility: visible;
   `}

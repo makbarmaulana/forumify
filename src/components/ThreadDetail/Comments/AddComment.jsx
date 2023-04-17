@@ -57,7 +57,7 @@ const AddCommentWrapper = styled.div`
   align-items: center;
   gap: 0.7rem;
   padding: 1rem;
-  background: #fff;
+  background-color: #fff;
   border-top: 1px solid #d6d6d6;
   z-index: 2;
   // delete this

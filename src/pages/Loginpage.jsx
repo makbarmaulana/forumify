@@ -36,7 +36,7 @@ const LoginContainer = styled.section`
 `;
 
 const LoginHeader = styled.div`
-  padding: 4em 0;
+  padding: 3em 0;
 `;
 const Title = styled.h2`
   font-size: 1.4rem;

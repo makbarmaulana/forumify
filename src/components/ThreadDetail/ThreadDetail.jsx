@@ -29,7 +29,7 @@ function ThreadDetail({
 
   const voteHandler = (type) => {
     if (!authUser) {
-      alert('Please log in first.');
+      alert('Please login first');
       return;
     }
 
@@ -118,6 +118,7 @@ const Username = styled.p`
   font-weight: 500;
 `;
 const PostedTime = styled.p`
+  margin-top: 0.3em;
   font-size: 0.7rem;
   font-weight: 400;
   color: #757575;

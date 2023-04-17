@@ -118,11 +118,7 @@ const TogglePasswordButton = styled(Button)`
   top: 50%;
   right: 0.7em;
   transform: translateY(-50%);
-  font-size: 1rem;
-
-  &:hover {
-    color: #5d9dfe;
-  }
+  background-color: #e7f0fe;
 `;
 
 const Buttons = styled.div`
