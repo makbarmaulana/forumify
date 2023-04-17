@@ -1,34 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { Outlet, Route, Routes } from 'react-router-dom';
+import { asyncPreloadProcess } from './states/isPreload/action';
+import PrivateOutlet from './utils/PrivateOutlet';
+import Homepage from './pages/Homepage';
+import ThreadDetailpage from './pages/ThreadDetailpage';
+import Loginpage from './pages/Loginpage';
+import Registerpage from './pages/Registerpage';
+import AddThreadpage from './pages/AddThreadpage';
+import Leaderboardspage from './pages/Leaderboardspage';
+import Maintenancepage from './pages/Maintenancepage';
+import Errorpage from './pages/Errorpage';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { isPreload = false } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(asyncPreloadProcess());
+  }, [dispatch]);
+
+  if (isPreload) return null;
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <AppContainer>
+      <Routes>
+        <Route element={<Outlet />}>
+          <Route index path="/" element={<Homepage />} />
+          <Route path="/threads/:id" element={<ThreadDetailpage />} />
+          <Route path="/leaderboards" element={<Leaderboardspage />} />
+          <Route path="/login" element={<Loginpage />} />
+          <Route path="/register" element={<Registerpage />} />
+          <Route path="/maintenance" element={<Maintenancepage />} />
+          <Route path="*" element={<Errorpage />} />
+
+          <Route element={<PrivateOutlet />}>
+            <Route path="/new" element={<AddThreadpage />} />
+          </Route>
+        </Route>
+      </Routes>
+    </AppContainer>
+  );
 }
 
-export default App
+export default App;
+
+const AppContainer = styled.div`
+  position: relative;
+  min-height: 100vh;
+  // delete this
+  width: 425px;
+  margin: auto;
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+  outline: 1px solid #f5f5f5;
+`;
