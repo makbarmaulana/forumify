@@ -1,3 +1,4 @@
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import api from '../../utils/api';
 
 export const ActionType = {
@@ -47,12 +48,16 @@ export const neutralVoteThreadActionCreator = ({ threadId, userId }) => ({
 });
 
 export const asyncGetAllThreads = () => async (dispatch) => {
+  dispatch(showLoading());
+
   try {
     const threads = await api.getAllThreads();
     dispatch(getAllThreadsActionCreator(threads));
   } catch (error) {
     console.error(error.message);
   }
+
+  dispatch(hideLoading());
 };
 
 export const asyncAddThread = ({ title, body, category = '' }) => async (dispatch) => {

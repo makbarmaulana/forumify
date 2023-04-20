@@ -1,3 +1,4 @@
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import api from '../../utils/api';
 import { setAuthUserActionCreator } from '../authUser/action';
 
@@ -13,6 +14,8 @@ export const setIsPreloadActionCreator = (isPreload) => ({
 });
 
 export const asyncPreloadProcess = () => async (dispatch) => {
+  dispatch(showLoading());
+
   try {
     const authUser = await api.getOwnProfile();
     dispatch(setAuthUserActionCreator(authUser));
@@ -21,4 +24,6 @@ export const asyncPreloadProcess = () => async (dispatch) => {
   } finally {
     dispatch(setIsPreloadActionCreator(false));
   }
+
+  dispatch(hideLoading());
 };
