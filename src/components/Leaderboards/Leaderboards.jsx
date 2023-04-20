@@ -9,7 +9,7 @@ function Leaderboards({ leaderboards }) {
       <UserList>
         {leaderboards.map(({ user, score }) => (
           <UserItem key={user?.id}>
-            <Avatar src={user?.avatar} alt={user?.name} width="1.8em" />
+            <Avatar src={user?.avatar} alt={user?.name} width="1.5em" />
             <Username>{user?.name}</Username>
             <Score>{score}</Score>
           </UserItem>
@@ -48,11 +48,11 @@ const UserItem = styled.li`
   gap: 0.7em;
 `;
 const Username = styled.h5`
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 500;
 `;
 const Score = styled.p`
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 500;
   margin-left: auto;
 `;

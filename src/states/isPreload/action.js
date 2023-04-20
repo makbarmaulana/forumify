@@ -1,12 +1,12 @@
-import { api } from '../../utils/api';
+import api from '../../utils/api';
 import { setAuthUserActionCreator } from '../authUser/action';
 
-export const ActionTypes = {
-  SET_IS_PRELOAD: 'authUser/setIsPreload',
+export const ActionType = {
+  SET_IS_PRELOAD: 'SET_IS_PRELOAD',
 };
 
 export const setIsPreloadActionCreator = (isPreload) => ({
-  type: ActionTypes.SET_IS_PRELOAD,
+  type: ActionType.SET_IS_PRELOAD,
   payload: {
     isPreload,
   },
@@ -17,7 +17,7 @@ export const asyncPreloadProcess = () => async (dispatch) => {
     const authUser = await api.getOwnProfile();
     dispatch(setAuthUserActionCreator(authUser));
   } catch (error) {
-    throw new Error(error.message);
+    console.error(error.message);
   } finally {
     dispatch(setIsPreloadActionCreator(false));
   }

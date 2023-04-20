@@ -1,6 +1,6 @@
 import { ActionType } from './action';
 
-export const leaderboardsReducer = (leaderboards = null, action = {}) => {
+const leaderboardsReducer = (leaderboards = [], action = {}) => {
   switch (action.type) {
     case ActionType.GET_LEADERBOARDS:
       return action.payload.leaderboards;
@@ -8,3 +8,5 @@ export const leaderboardsReducer = (leaderboards = null, action = {}) => {
       return leaderboards;
   }
 };
+
+export default leaderboardsReducer;

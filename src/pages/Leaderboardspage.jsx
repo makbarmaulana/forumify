@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { MainContainer } from '../components/Styled/MainContainer';
-import { asyncPopulateStates } from '../states/shared/actions';
+import { asyncGetLeaderboards } from '../states/leaderboards/action';
+import MainContainer from '../components/Styled/MainContainer';
 import Header from '../components/Header/Header';
 import AppbarOther from '../components/Header/Appbar/AppbarOther';
 import Leaderboards from '../components/Leaderboards/Leaderboards';
@@ -13,7 +13,7 @@ function Leaderboardspage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(asyncPopulateStates());
+    dispatch(asyncGetLeaderboards());
   }, [dispatch]);
 
   if (!leaderboards) return null;

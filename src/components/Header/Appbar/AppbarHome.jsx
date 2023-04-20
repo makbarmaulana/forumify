@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { BiSearch } from 'react-icons/bi';
 import { NavLink } from 'react-router-dom';
-import { Input } from '../../Styled/Input';
-import { Button } from '../../Styled/Button';
+import Input from '../../Styled/Input';
+import Button from '../../Styled/Button';
 
 function AppbarHome({ keyword }) {
   const [keywordValue, setKeywordValue] = useState('');
@@ -22,7 +22,7 @@ function AppbarHome({ keyword }) {
       <SearchBar>
         <SearchInput
           type="text"
-          placeholder="Search..."
+          placeholder="Search title..."
           value={keywordValue}
           onChange={({ target }) => setKeywordValue(target.value)}
           onKeyDown={(e) => searchHandler(e)}

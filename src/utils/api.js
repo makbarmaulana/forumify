@@ -1,276 +1,152 @@
 import axios from 'axios';
 
-export const api = (() => {
-  const instance = axios.create({
-    baseURL: 'https://forum-api.dicoding.dev/v1',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+const baseURL = 'https://forum-api.dicoding.dev/v1';
+const headers = { 'Content-Type': 'application/json' };
+const instance = axios.create({ baseURL, headers });
 
-  const setAccessToken = (token) => {
-    localStorage.setItem('accessToken', token);
-  };
-
-  const removeAccessToken = () => {
-    localStorage.removeItem('accessToken');
-  };
-
-  const getAccessToken = () => localStorage.getItem('accessToken');
-
-  const login = async ({ email, password }) => {
-    try {
-      const response = await instance.post('/login', { email, password });
-      const { token } = response.data.data;
-      return token;
-    } catch (error) {
-      throw new Error(error?.response?.data?.message);
-    }
-  };
-
-  const register = async ({ name, email, password }) => {
-    try {
-      const response = await instance.post('/register', {
-        name,
-        email,
-        password,
-      });
-      const { user } = response.data.data;
-      return user;
-    } catch (error) {
-      throw new Error(error?.response?.data?.message);
-    }
-  };
-
-  const getOwnProfile = async () => {
-    const token = getAccessToken();
+const api = {
+  setAccessToken: (token) => localStorage.setItem('accessToken', token),
+  removeAccessToken: () => localStorage.removeItem('accessToken'),
+  getAccessToken: () => localStorage.getItem('accessToken'),
+  checkAccessToken: () => {
+    const token = api.getAccessToken();
     if (!token) {
       throw new Error('Unauthorized');
     }
+    return token;
+  },
 
+  login: async ({ email, password }) => {
     try {
-      const response = await instance.get('/users/me', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const { user } = response.data.data;
-      return user;
+      const { data } = await instance.post(
+        '/login',
+        { email, password },
+      );
+      return data.data.token;
     } catch (error) {
       throw new Error(error?.response?.data?.message);
     }
-  };
+  },
 
-  const getAllUsers = async () => {
-    const response = await instance.get('/users');
-    const { users } = response.data.data;
-    return users;
-  };
-
-  const createThread = async ({ title, body, category }) => {
-    const token = getAccessToken();
-    if (!token) {
-      throw new Error('Unauthorized');
+  register: async ({ name, email, password }) => {
+    try {
+      const { data } = await instance.post(
+        '/register',
+        {
+          name,
+          email,
+          password,
+        },
+      );
+      return data.data.user;
+    } catch (error) {
+      throw new Error(error?.response?.data?.message);
     }
+  },
+
+  getOwnProfile: async () => {
+    const token = api.checkAccessToken();
 
     try {
-      const response = await instance.post(
+      const { data } = await instance.get(
+        '/users/me',
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      return data.data.user;
+    } catch (error) {
+      throw new Error(error?.response?.data?.message);
+    }
+  },
+
+  getAllUsers: async () => {
+    const { data } = await instance.get('/users');
+    return data.data.users;
+  },
+
+  createThread: async ({ title, body, category }) => {
+    const token = api.checkAccessToken();
+
+    try {
+      const { data } = await instance.post(
         '/threads',
         { title, body, category },
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
-      const { thread } = response.data.data;
-      return thread;
-    } catch (error) {
-      throw new Error(error?.response?.data?.message);
-    }
-  };
-
-  const getAllThreads = async () => {
-    const response = await instance.get('/threads');
-    const { threads } = response.data.data;
-    return threads;
-  };
-
-  const upVoteThread = async (threadId) => {
-    const token = getAccessToken();
-    if (!token) {
-      throw new Error('Unauthorized');
-    }
-
-    try {
-      const response = await instance.post(
-        `/threads/${threadId}/up-vote`,
-        {},
         {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-      const { vote } = response.data.data;
-      return vote;
+      return data.data.thread;
     } catch (error) {
       throw new Error(error?.response?.data?.message);
     }
-  };
+  },
 
-  const downVoteThread = async (threadId) => {
-    const token = getAccessToken();
-    if (!token) {
-      throw new Error('Unauthorized');
-    }
+  getAllThreads: async () => {
+    const { data } = await instance.get('/threads');
+    return data.data.threads;
+  },
 
-    try {
-      const response = await instance.post(
-        `/threads/${threadId}/down-vote`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
-      const { vote } = response.data.data;
-      return vote;
-    } catch (error) {
-      throw new Error(error?.response?.data?.message);
-    }
-  };
+  getThreadDetail: async (id) => {
+    const { data } = await instance.get(`/threads/${id}`);
+    return data.data.detailThread;
+  },
 
-  const clearVoteThread = async (threadId) => {
-    const token = getAccessToken();
-    if (!token) {
-      throw new Error('Unauthorized');
-    }
+  createComment: async ({ threadId, content }) => {
+    const token = api.checkAccessToken();
 
     try {
-      const response = await instance.post(
-        `/threads/${threadId}/neutral-vote`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
-      const { vote } = response.data.data;
-      return vote;
-    } catch (error) {
-      throw new Error(error?.response?.data?.message);
-    }
-  };
-
-  const getThreadDetail = async (id) => {
-    const response = await instance.get(`/threads/${id}`);
-    const { detailThread } = response.data.data;
-    return detailThread;
-  };
-
-  const addComment = async ({ threadId, content }) => {
-    const token = getAccessToken();
-    if (!token) {
-      throw new Error('Unauthorized');
-    }
-
-    try {
-      const response = await instance.post(
+      const { data } = await instance.post(
         `/threads/${threadId}/comments`,
         { content },
         {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-      const { comment } = response.data.data;
-      return comment;
+      return data.data.comment;
     } catch (error) {
       throw new Error(error?.response?.data?.message);
     }
-  };
+  },
 
-  const upVoteComment = async ({ threadId, commentId }) => {
-    const token = getAccessToken();
-    if (!token) {
-      throw new Error('Unauthorized');
-    }
+  voteThread: async (threadId, voteType) => {
+    const token = api.checkAccessToken();
 
     try {
-      const response = await instance.post(
-        `/threads/${threadId}/comments/${commentId}/up-vote`,
+      const { data } = await instance.post(
+        `/threads/${threadId}/${voteType}`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-      const { vote } = response.data.data;
-      return vote;
+      return data.data.vote;
     } catch (error) {
       throw new Error(error?.response?.data?.message);
     }
-  };
+  },
 
-  const downVoteComment = async ({ threadId, commentId }) => {
-    const token = getAccessToken();
-    if (!token) {
-      throw new Error('Unauthorized');
-    }
+  voteComment: async ({ threadId, commentId, voteType }) => {
+    const token = api.checkAccessToken();
 
     try {
-      const response = await instance.post(
-        `/threads/${threadId}/comments/${commentId}/down-vote`,
+      const { data } = await instance.post(
+        `/threads/${threadId}/comments/${commentId}/${voteType}`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-      const { vote } = response.data.data;
-      return vote;
+      return data.data.vote;
     } catch (error) {
       throw new Error(error?.response?.data?.message);
     }
-  };
+  },
 
-  const clearVoteComment = async ({ threadId, commentId }) => {
-    const token = getAccessToken();
-    if (!token) {
-      throw new Error('Unauthorized');
-    }
+  getLeaderboards: async () => {
+    const { data } = await instance.get('/leaderboards');
+    return data.data.leaderboards;
+  },
+};
 
-    try {
-      const response = await instance.post(
-        `/threads/${threadId}/comments/${commentId}/neutral-vote`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
-      const { vote } = response.data.data;
-      return vote;
-    } catch (error) {
-      throw new Error(error?.response?.data?.message);
-    }
-  };
-
-  const getLeaderboards = async () => {
-    try {
-      const response = await instance.get('/leaderboards');
-      const { leaderboards } = response.data.data;
-      return leaderboards;
-    } catch (error) {
-      throw new Error(error?.response?.data?.message);
-    }
-  };
-
-  return {
-    setAccessToken,
-    removeAccessToken,
-    getAccessToken,
-    login,
-    register,
-    getOwnProfile,
-    getAllUsers,
-    createThread,
-    getAllThreads,
-    upVoteThread,
-    downVoteThread,
-    clearVoteThread,
-    getThreadDetail,
-    addComment,
-    upVoteComment,
-    downVoteComment,
-    clearVoteComment,
-    getLeaderboards,
-  };
-})();
+export default api;

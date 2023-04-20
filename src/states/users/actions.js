@@ -1,11 +1,11 @@
-import { api } from '../../utils/api';
+import api from '../../utils/api';
 
-export const ActionTypes = {
-  GET_ALL_USERS: 'users/getAllUsers',
+export const ActionType = {
+  GET_ALL_USERS: 'GET_ALL_USERS',
 };
 
-export const getAllUsersActionsCreator = (users) => ({
-  type: ActionTypes.GET_ALL_USERS,
+export const getAllUsersActionCreator = (users) => ({
+  type: ActionType.GET_ALL_USERS,
   payload: {
     users,
   },
@@ -14,16 +14,16 @@ export const getAllUsersActionsCreator = (users) => ({
 export const asyncGetAllUsers = () => async (dispatch) => {
   try {
     const users = await api.getAllUsers();
-    dispatch(getAllUsersActionsCreator(users));
+    dispatch(getAllUsersActionCreator(users));
   } catch (error) {
-    throw new Error(error.message);
+    console.error(error.message);
   }
 };
 
-export const asyncRegister = (registerForm) => async () => {
+export const asyncRegister = ({ name, email, password }) => async () => {
   try {
-    await api.register(registerForm);
+    await api.register({ name, email, password });
   } catch (error) {
-    throw new Error(error.message);
+    console.error(error.message);
   }
 };

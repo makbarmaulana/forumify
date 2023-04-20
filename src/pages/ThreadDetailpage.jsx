@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncGetThreadDetail } from '../states/threadDetail/action';
-import { MainContainer } from '../components/Styled/MainContainer';
-import { useAuth } from '../hooks/useAuth';
+import useAuth from '../hooks/useAuth';
+import MainContainer from '../components/Styled/MainContainer';
 import Header from '../components/Header/Header';
 import AppbarOther from '../components/Header/Appbar/AppbarOther';
 import ThreadDetail from '../components/ThreadDetail/ThreadDetail';
@@ -36,11 +36,11 @@ function ThreadDetailpage() {
       </Header>
 
       <MainContainer>
-        <ThreadDetail {...threadDetailData} />
+        <ThreadDetail threadDetail={threadDetailData} />
         <Comments threadDetail={threadDetailData} />
       </MainContainer>
 
-      {isAuth && <AddComment {...threadDetailData} />}
+      {isAuth && <AddComment threadDetail={threadDetailData} />}
     </>
   );
 }

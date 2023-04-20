@@ -1,44 +1,52 @@
-import { ActionTypes } from './actions';
+import { ActionType } from './actions';
 
-export const threadsReducer = (threads = [], action = {}) => {
+const threadsReducer = (threads = [], action = {}) => {
+  const { userId = null, threadId = null } = action.payload ?? {};
+  const isCurrentThread = threads?.find((thread) => thread.id === threadId);
+  const isUpVoted = isCurrentThread?.upVotesBy.includes(userId);
+  const isDownVoted = isCurrentThread?.downVotesBy.includes(userId);
+
   switch (action.type) {
-    case ActionTypes.GET_ALL_THREADS:
+    case ActionType.GET_ALL_THREADS:
       return action.payload.threads;
-    case ActionTypes.ADD_THREAD:
-      return threads.concat(action.payload.thread);
-    case ActionTypes.UP_VOTE_THREAD:
+    case ActionType.ADD_THREAD:
+      return [action.payload.thread, ...threads];
+    case ActionType.UP_VOTE_THREAD:
       return threads.map((thread) => {
-        if (thread.id === action.payload.threadId) {
+        // if not voted, add userId to array upVotesBy & delete userId from downVotesBy
+        if (thread.id === threadId && !isUpVoted) {
           return {
             ...thread,
-            upVotesBy: thread.upVotesBy.includes(action.payload.userId)
-              ? thread.upVotesBy
-              : thread.upVotesBy.concat(action.payload.userId),
-            downVotesBy: thread.downVotesBy.filter((id) => id !== action.payload.userId),
+            upVotesBy: [userId, ...thread.upVotesBy],
+            downVotesBy: thread.downVotesBy.filter((id) => id !== userId),
           };
         }
         return thread;
       });
-    case ActionTypes.DOWN_VOTE_THREAD:
+    case ActionType.DOWN_VOTE_THREAD:
       return threads.map((thread) => {
-        if (thread.id === action.payload.threadId) {
+        // if not voted, add userId to array downVotesBy & delete userId from upVotesBy
+        if (thread.id === threadId && !isDownVoted) {
           return {
             ...thread,
-            upVotesBy: thread.upVotesBy.filter((id) => id !== action.payload.userId),
-            downVotesBy: thread.downVotesBy.includes(action.payload.userId)
-              ? thread.downVotesBy
-              : thread.downVotesBy.concat(action.payload.userId),
+            upVotesBy: thread.upVotesBy.filter((id) => id !== userId),
+            downVotesBy: [userId, ...thread.downVotesBy],
           };
         }
         return thread;
       });
-    case ActionTypes.CLEAR_VOTE_THREAD:
+    case ActionType.NEUTRAL_VOTE_THREAD:
       return threads.map((thread) => {
-        if (thread.id === action.payload.threadId) {
+        // delete userId from upVotesBy or downVotesBy
+        if (thread.id === threadId) {
           return {
             ...thread,
-            upVotesBy: thread.upVotesBy.filter((id) => id !== action.payload.userId),
-            downVotesBy: thread.upVotesBy.filter((id) => id !== action.payload.userId),
+            upVotesBy: isUpVoted
+              ? thread.upVotesBy.filter((id) => id !== userId)
+              : thread.upVotesBy,
+            downVotesBy: isDownVoted
+              ? thread.downVotesBy.filter((id) => id !== userId)
+              : thread.downVotesBy,
           };
         }
         return thread;
@@ -47,3 +55,5 @@ export const threadsReducer = (threads = [], action = {}) => {
       return threads;
   }
 };
+
+export default threadsReducer;

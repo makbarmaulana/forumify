@@ -18,9 +18,8 @@ function Comments({ threadDetail }) {
       <CommentsList>
         {comments.map((comment) => (
           <CommentItem
-            {...comment}
+            comment={comment}
             key={comment.id}
-            commentId={comment.id}
             threadId={threadDetail.id}
             authUser={authUser}
           />

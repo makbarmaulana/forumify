@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { IoArrowBack } from 'react-icons/io5';
-import { StyledLink } from '../../Styled/StyledLink';
+import StyledLink from '../../Styled/StyledLink';
 
 function AppbarOther({ title }) {
   return (

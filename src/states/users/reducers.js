@@ -1,10 +1,12 @@
-import { ActionTypes } from './actions';
+import { ActionType } from './actions';
 
-export const usersReducers = (users = [], action = {}) => {
+const usersReducers = (users = [], action = {}) => {
   switch (action.type) {
-    case ActionTypes.GET_ALL_USERS:
+    case ActionType.GET_ALL_USERS:
       return action.payload.users;
     default:
       return users;
   }
 };
+
+export default usersReducers;

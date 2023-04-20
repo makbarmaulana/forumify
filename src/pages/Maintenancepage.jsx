@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { MainContainer } from '../components/Styled/MainContainer';
+import MainContainer from '../components/Styled/MainContainer';
 
 function Maintenancepage() {
   return (

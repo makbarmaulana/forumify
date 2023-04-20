@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from '../../Styled/Button';
+import Button from '../../Styled/Button';
 
 function Category({ threads, keyword, activeCategory }) {
   const categories = [...new Set(threads.map((thread) => thread.category))];
