@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { authUserReducer } from './authUser/reducer';
-import { isPreloadReducer } from './isPreload/reducer';
-import { leaderboardsReducer } from './leaderboards/reducer';
-import { threadDetailReducer } from './threadDetail/reducer';
-import { threadsReducer } from './threads/reducers';
-import { usersReducers } from './users/reducers';
+import authUserReducer from './authUser/reducer';
+import isPreloadReducer from './isPreload/reducer';
+import leaderboardsReducer from './leaderboards/reducer';
+import threadDetailReducer from './threadDetail/reducer';
+import threadsReducer from './threads/reducers';
+import usersReducers from './users/reducers';
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     authUser: authUserReducer,
     isPreload: isPreloadReducer,
@@ -16,3 +16,5 @@ export const store = configureStore({
     leaderboards: leaderboardsReducer,
   },
 });
+
+export default store;

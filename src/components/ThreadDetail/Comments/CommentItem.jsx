@@ -1,46 +1,44 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import parser from 'html-react-parser';
 import { useDispatch } from 'react-redux';
 import { HiArrowDown, HiArrowUp } from 'react-icons/hi';
-import { postedAt } from '../../../utils/formatDate';
 import {
-  asyncClearVoteComment,
   asyncDownVoteComment,
+  asyncNeutralVoteComment,
   asyncUpVoteComment,
 } from '../../../states/threadDetail/action';
+import postedAt from '../../../utils/formatDate';
 import Avatar from '../../Styled/Avatar';
 import VoteButton from '../../Styled/VoteButton';
 
-function CommentItem({
-  commentId, threadId, createdAt, content, upVotesBy, downVotesBy, owner, authUser,
-}) {
+function CommentItem({ comment, threadId, authUser }) {
+  const {
+    id: commentId,
+    createdAt,
+    content,
+    upVotesBy,
+    downVotesBy,
+    owner,
+  } = comment;
   const dispatch = useDispatch();
-  const [isLiked, setIsLiked] = useState(false);
-  const [isDisliked, setIsDisliked] = useState(false);
+  const isUpVoted = upVotesBy.includes(authUser?.id);
+  const isDownVoted = downVotesBy.includes(authUser?.id);
 
-  useEffect(() => {
-    setIsLiked(Boolean(upVotesBy.includes(authUser?.id)));
-    setIsDisliked(Boolean(downVotesBy.includes(authUser?.id)));
-  }, [upVotesBy, downVotesBy, authUser]);
-
-  const voteHandler = (type) => {
+  const voteHandler = (voteType) => {
     if (!authUser) {
       alert('Please login first');
       return;
     }
-
-    if (type === 'upvote' && !isLiked) {
+    if (voteType === 'up-vote' && !isUpVoted) {
       dispatch(asyncUpVoteComment({ threadId, commentId }));
       return;
     }
-
-    if (type === 'downvote' && !isDisliked) {
+    if (voteType === 'down-vote' && !isDownVoted) {
       dispatch(asyncDownVoteComment({ threadId, commentId }));
       return;
     }
-
-    dispatch(asyncClearVoteComment({ threadId, commentId }));
+    dispatch(asyncNeutralVoteComment({ threadId, commentId }));
   };
 
   return (
@@ -63,16 +61,16 @@ function CommentItem({
           <Votes>
             <VoteButton
               icon={<HiArrowUp />}
-              isVoted={isLiked}
+              isVoted={isUpVoted}
               label={upVotesBy.length}
-              onClick={() => voteHandler('upvote')}
+              onClick={() => voteHandler('up-vote')}
             />
 
             <VoteButton
               icon={<HiArrowDown />}
-              isVoted={isDisliked}
+              isVoted={isDownVoted}
               label={downVotesBy.length}
-              onClick={() => voteHandler('downvote')}
+              onClick={() => voteHandler('down-vote')}
             />
           </Votes>
         </CommentFooter>
@@ -84,7 +82,7 @@ function CommentItem({
 export default CommentItem;
 
 const CommentItemWrapper = styled.section`
-  padding: 0.8em;
+  padding: 1em;
   background-color: #fff;
   border: 1px solid #f5f5f5;
   overflow: hidden;
@@ -126,7 +124,7 @@ const CommentFooter = styled.div`
   margin-top: 1.2em;
   display: flex;
   user-select: none;
-  `;
+`;
 
 const Votes = styled.div`
   display: flex;

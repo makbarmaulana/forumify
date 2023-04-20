@@ -10,7 +10,7 @@ const buttonStyles = css`
   transition: all 100ms ease;
 `;
 
-export const Button = styled.button`
+const Button = styled.button`
   ${(props) => {
     switch (props.variant) {
       case 'primary':
@@ -57,3 +57,5 @@ export const Button = styled.button`
 Button.defaultProps = {
   type: 'button',
 };
+
+export default Button;

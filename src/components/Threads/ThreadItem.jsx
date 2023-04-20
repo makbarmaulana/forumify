@@ -1,55 +1,57 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import parser from 'html-react-parser';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FiMessageSquare } from 'react-icons/fi';
 import { HiArrowUp, HiArrowDown } from 'react-icons/hi';
 import { IoShareSocialOutline } from 'react-icons/io5';
-import { useDispatch } from 'react-redux';
-import { Button } from '../Styled/Button';
-import { postedAt } from '../../utils/formatDate';
-import { shareHandler } from '../../utils/shareThread';
 import {
-  asyncClearVoteThread,
   asyncDownVoteThread,
+  asyncNeutralVoteThread,
   asyncUpVoteThread,
 } from '../../states/threads/actions';
+import postedAt from '../../utils/formatDate';
+import shareLink from '../../utils/shareLink';
 import Avatar from '../Styled/Avatar';
+import Button from '../Styled/Button';
 import VoteButton from '../Styled/VoteButton';
 import CommentButton from '../Styled/CommentButton';
 
-function ThreadItem({
-  id, title, createdAt, body, category, upVotesBy, downVotesBy, totalComments, user, authUser,
-}) {
+function ThreadItem({ thread }) {
+  const {
+    id: threadId,
+    title,
+    createdAt,
+    body,
+    category,
+    upVotesBy,
+    downVotesBy,
+    totalComments,
+    user,
+    authUser,
+  } = thread;
   const dispatch = useDispatch();
-  const [isLiked, setIsLiked] = useState(false);
-  const [isDisliked, setIsDisliked] = useState(false);
+  const isUpVoted = upVotesBy.includes(authUser?.id);
+  const isDownVoted = downVotesBy.includes(authUser?.id);
 
-  useEffect(() => {
-    setIsLiked(Boolean(upVotesBy.includes(authUser?.id)));
-    setIsDisliked(Boolean(downVotesBy.includes(authUser?.id)));
-  }, [upVotesBy, downVotesBy, authUser]);
-
-  const voteHandler = (type) => {
+  const voteHandler = (voteType) => {
     if (!authUser) {
       alert('Please login first');
       return;
     }
-
-    if (type === 'upvote' && !isLiked) {
-      dispatch(asyncUpVoteThread(id));
+    if (voteType === 'up-vote' && !isUpVoted) {
+      dispatch(asyncUpVoteThread(threadId));
       return;
     }
-
-    if (type === 'downvote' && !isDisliked) {
-      dispatch(asyncDownVoteThread(id));
+    if (voteType === 'down-vote' && !isDownVoted) {
+      dispatch(asyncDownVoteThread(threadId));
       return;
     }
-
-    dispatch(asyncClearVoteThread(id));
+    dispatch(asyncNeutralVoteThread(threadId));
   };
 
-  const goToThreadDetail = `/threads/${id}`;
+  const goToThreadDetail = `/threads/${threadId}`;
 
   return (
     <ThreadWrapper>
@@ -61,7 +63,7 @@ function ThreadItem({
           <PostedTime>{postedAt(createdAt)}</PostedTime>
         </User>
 
-        <ShareButton onClick={() => shareHandler({ title, id })}>
+        <ShareButton onClick={() => shareLink({ title, threadId })}>
           <IoShareSocialOutline />
         </ShareButton>
       </ThreadHeader>
@@ -79,16 +81,16 @@ function ThreadItem({
         <Votes>
           <VoteButton
             icon={<HiArrowUp />}
-            isVoted={isLiked}
+            isVoted={isUpVoted}
             label={upVotesBy.length}
-            onClick={() => voteHandler('upvote')}
+            onClick={() => voteHandler('up-vote')}
           />
 
           <VoteButton
             icon={<HiArrowDown />}
-            isVoted={isDisliked}
+            isVoted={isDownVoted}
             label={downVotesBy.length}
-            onClick={() => voteHandler('downvote')}
+            onClick={() => voteHandler('down-vote')}
           />
         </Votes>
 
@@ -105,7 +107,7 @@ function ThreadItem({
 export default ThreadItem;
 
 const ThreadWrapper = styled.section`
-  padding: 1em 1em 1.5em 1em;
+  padding: 1.3em;
   gap: 0.5em;
   background-color: #fff;
   border-radius: 0.7em;
@@ -179,7 +181,7 @@ const ThreadFooter = styled.div`
   display: flex;
   justify-content: space-between;
   user-select: none;
-  `;
+`;
 
 const Votes = styled.div`
   display: flex;

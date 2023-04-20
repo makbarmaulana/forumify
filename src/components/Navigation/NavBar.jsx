@@ -4,10 +4,10 @@ import {
   FiHome, FiUsers, FiPlus, FiBell, FiUser,
 } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAuth } from '../../hooks/useAuth';
-import { NavItem } from './NavItem';
 import { asyncLogOut } from '../../states/authUser/action';
-import { Button } from '../Styled/Button';
+import useAuth from '../../hooks/useAuth';
+import NavItem from './NavItem';
+import Button from '../Styled/Button';
 import Avatar from '../Styled/Avatar';
 
 function Navbar() {
@@ -85,7 +85,7 @@ const NavBar = styled.nav`
   padding: 0.7rem;
   background-color: #fff;
   box-shadow: 0px -2px 8px 0px rgba(0, 0, 0, 0.1);
-  // delete this
+  // mobile device
   width: 425px;
   margin: auto;
 `;

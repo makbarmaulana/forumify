@@ -1,20 +1,75 @@
-import { api } from '../../utils/api';
+import api from '../../utils/api';
 
-export const ActionTypes = {
-  GET_THREAD_DETAIL: 'threadDetail/getThreadDetail',
-  UP_VOTE_THREAD_DETAIL: 'threadDetail/upVote',
-  DOWN_VOTE_THREAD_DETAIL: 'threadDetail/downVote',
-  CLEAR_VOTE_THREAD_DETAIL: 'threadDetail/clearVote',
-  ADD_COMMENT: 'comment/addComment',
-  UP_VOTE_COMMENT: 'comment/upVote',
-  DOWN_VOTE_COMMENT: 'comment/downVote',
-  CLEAR_VOTE_COMMENT: 'comment/clearVote',
+export const ActionType = {
+  GET_THREAD_DETAIL: 'GET_THREAD_DETAIL',
+  UP_VOTE_THREAD_DETAIL: 'UP_VOTE_THREAD_DETAIL',
+  DOWN_VOTE_THREAD_DETAIL: 'DOWN_VOTE_THREAD_DETAIL',
+  NEUTRAL_VOTE_THREAD_DETAIL: 'NEUTRAL_VOTE_THREAD_DETAIL',
+  ADD_COMMENT: 'ADD_COMMENT',
+  UP_VOTE_COMMENT: 'UP_VOTE_COMMENT',
+  DOWN_VOTE_COMMENT: 'DOWN_VOTE_COMMENT',
+  NEUTRAL_VOTE_COMMENT: 'NEUTRAL_VOTE_COMMENT',
 };
 
 export const getThreadDetailActionCreator = (threadDetail) => ({
-  type: ActionTypes.GET_THREAD_DETAIL,
+  type: ActionType.GET_THREAD_DETAIL,
   payload: {
     threadDetail,
+  },
+});
+
+export const upVoteThreadDetailActionCreator = ({ threadId, userId }) => ({
+  type: ActionType.UP_VOTE_THREAD_DETAIL,
+  payload: {
+    threadId,
+    userId,
+  },
+});
+
+export const downVoteThreadDetailActionCreator = ({ threadId, userId }) => ({
+  type: ActionType.DOWN_VOTE_THREAD_DETAIL,
+  payload: {
+    threadId,
+    userId,
+  },
+});
+
+export const neutralVoteThreadDetailActionCreator = ({ threadId, userId }) => ({
+  type: ActionType.NEUTRAL_VOTE_THREAD_DETAIL,
+  payload: {
+    threadId,
+    userId,
+  },
+});
+
+export const addCommentActionCreator = (comment) => ({
+  type: ActionType.ADD_COMMENT,
+  payload: {
+    comment,
+  },
+});
+
+export const upVoteCommentActionCreator = ({ commentId, userId }) => ({
+  type: ActionType.UP_VOTE_COMMENT,
+  payload: {
+    commentId,
+    userId,
+  },
+});
+
+export const downVoteCommentActionCreator = ({ commentId, userId }) => ({
+  type: ActionType.DOWN_VOTE_COMMENT,
+  payload: {
+    commentId,
+    userId,
+  },
+});
+
+export const neutralVoteCommentActionCreator = ({ commentId, userId }) => ({
+  type: ActionType.NEUTRAL_VOTE_COMMENT,
+  payload: {
+    commentId,
+    userId,
   },
 });
 
@@ -23,154 +78,99 @@ export const asyncGetThreadDetail = (threadId) => async (dispatch) => {
     const threadDetail = await api.getThreadDetail(threadId);
     dispatch(getThreadDetailActionCreator(threadDetail));
   } catch (error) {
-    throw new Error(error.message);
+    console.error(error.message);
   }
 };
 
-export const upVoteThreadDetailActionsCreator = ({ threadId, userId }) => ({
-  type: ActionTypes.UP_VOTE_THREAD_DETAIL,
-  payload: {
-    threadId,
-    userId,
-  },
-});
-
-export const downVoteThreadDetailActionsCreator = ({ threadId, userId }) => ({
-  type: ActionTypes.DOWN_VOTE_THREAD_DETAIL,
-  payload: {
-    threadId,
-    userId,
-  },
-});
-
-export const clearVoteThreadDetailActionsCreator = ({ threadId, userId }) => ({
-  type: ActionTypes.CLEAR_VOTE_THREAD_DETAIL,
-  payload: {
-    threadId,
-    userId,
-  },
-});
-
-export const addCommentActionCreator = (comment) => ({
-  type: ActionTypes.ADD_COMMENT,
-  payload: {
-    comment,
-  },
-});
-
-export const upVoteCommentActionsCreator = ({ commentId, userId }) => ({
-  type: ActionTypes.UP_VOTE_COMMENT,
-  payload: {
-    commentId,
-    userId,
-  },
-});
-
-export const downVoteCommentActionsCreator = ({ commentId, userId }) => ({
-  type: ActionTypes.DOWN_VOTE_COMMENT,
-  payload: {
-    commentId,
-    userId,
-  },
-});
-
-export const clearVoteCommentActionsCreator = ({ commentId, userId }) => ({
-  type: ActionTypes.CLEAR_VOTE_COMMENT,
-  payload: {
-    commentId,
-    userId,
-  },
-});
-
 export const asyncUpVoteThreadDetail = (threadId) => async (dispatch, getState) => {
   const { authUser } = getState();
-  const prevState = { threadId, userId: authUser.id };
+  const voteType = 'up-vote';
 
-  dispatch(upVoteThreadDetailActionsCreator({ threadId, userId: authUser.id }));
+  dispatch(upVoteThreadDetailActionCreator({ threadId, userId: authUser.id }));
 
   try {
-    await api.upVoteThread(threadId);
-    dispatch(upVoteThreadDetailActionsCreator(prevState));
+    await api.voteThread(threadId, voteType);
+    dispatch(upVoteThreadDetailActionCreator({ threadId, userId: authUser.id }));
   } catch (error) {
-    throw new Error(error.message);
+    alert(error.message);
   }
 };
 
 export const asyncDownVoteThreadDetail = (threadId) => async (dispatch, getState) => {
   const { authUser } = getState();
-  const prevState = { threadId, userId: authUser.id };
+  const voteType = 'down-vote';
 
-  dispatch(downVoteThreadDetailActionsCreator({ threadId, userId: authUser.id }));
+  dispatch(downVoteThreadDetailActionCreator({ threadId, userId: authUser.id }));
 
   try {
-    await api.downVoteThread(threadId);
-    dispatch(downVoteThreadDetailActionsCreator(prevState));
+    await api.voteThread(threadId, voteType);
+    dispatch(downVoteThreadDetailActionCreator({ threadId, userId: authUser.id }));
   } catch (error) {
-    throw new Error(error.message);
+    alert(error.message);
   }
 };
 
-export const asyncClearVoteThreadDetail = (threadId) => async (dispatch, getState) => {
+export const asyncNeutralVoteThreadDetail = (threadId) => async (dispatch, getState) => {
   const { authUser } = getState();
-  const prevState = { threadId, userId: authUser.id };
+  const voteType = 'neutral-vote';
 
-  dispatch(clearVoteThreadDetailActionsCreator({ threadId, userId: authUser.id }));
+  dispatch(neutralVoteThreadDetailActionCreator({ threadId, userId: authUser.id }));
 
   try {
-    await api.clearVoteThread(threadId);
-    dispatch(clearVoteThreadDetailActionsCreator(prevState));
+    await api.voteThread(threadId, voteType);
+    dispatch(neutralVoteThreadDetailActionCreator({ threadId, userId: authUser.id }));
   } catch (error) {
-    throw new Error(error.message);
+    alert(error.message);
   }
 };
 
 export const asyncAddComment = ({ threadId, content }) => async (dispatch) => {
   try {
-    const comment = await api.addComment({ threadId, content });
+    const comment = await api.createComment({ threadId, content });
     dispatch(addCommentActionCreator(comment));
   } catch (error) {
-    throw new Error(error.message);
+    console.error(error.message);
   }
 };
 
 export const asyncUpVoteComment = ({ threadId, commentId }) => async (dispatch, getState) => {
   const { authUser } = getState();
-  const prevState = { threadId, commentId, userId: authUser.id };
+  const voteType = 'up-vote';
 
-  dispatch(upVoteCommentActionsCreator({ commentId, userId: authUser.id }));
+  dispatch(upVoteCommentActionCreator({ commentId, userId: authUser.id }));
 
   try {
-    await api.upVoteComment({ threadId, commentId });
-    dispatch(upVoteCommentActionsCreator(prevState));
+    await api.voteComment({ threadId, commentId, voteType });
+    dispatch(upVoteCommentActionCreator({ commentId, userId: authUser.id }));
   } catch (error) {
-    throw new Error(error.message);
+    alert(error.message);
   }
 };
 
 export const asyncDownVoteComment = ({ threadId, commentId }) => async (dispatch, getState) => {
   const { authUser } = getState();
-  const prevState = { threadId, commentId, userId: authUser.id };
+  const voteType = 'down-vote';
 
-  dispatch(downVoteCommentActionsCreator({ commentId, userId: authUser.id }));
+  dispatch(downVoteCommentActionCreator({ commentId, userId: authUser.id }));
 
   try {
-    await api.downVoteComment({ threadId, commentId });
-    dispatch(downVoteCommentActionsCreator(prevState));
+    await api.voteComment({ threadId, commentId, voteType });
+    dispatch(downVoteCommentActionCreator({ commentId, userId: authUser.id }));
   } catch (error) {
-    throw new Error(error.message);
+    alert(error.message);
   }
 };
 
-export const asyncClearVoteComment = ({ threadId, commentId }) => async (dispatch, getState) => {
+export const asyncNeutralVoteComment = ({ threadId, commentId }) => async (dispatch, getState) => {
   const { authUser } = getState();
-  const prevState = { threadId, commentId, userId: authUser.id };
+  const voteType = 'neutral-vote';
 
-  dispatch(clearVoteCommentActionsCreator({ commentId, userId: authUser.id }));
+  dispatch(neutralVoteCommentActionCreator({ commentId, userId: authUser.id }));
 
   try {
-    await api.clearVoteComment({ threadId, commentId });
-    dispatch(clearVoteCommentActionsCreator(prevState));
+    await api.voteComment({ threadId, commentId, voteType });
+    dispatch(neutralVoteCommentActionCreator({ commentId, userId: authUser.id }));
   } catch (error) {
-    throw new Error(error.message);
+    alert(error.message);
   }
 };

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-export const NavItem = styled(NavLink)`
+const NavItem = styled(NavLink)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,3 +21,5 @@ export const NavItem = styled(NavLink)`
     color: #6465d0;
   }
 `;
+
+export default NavItem;

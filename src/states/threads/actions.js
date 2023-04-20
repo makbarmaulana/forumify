@@ -1,45 +1,45 @@
-import { api } from '../../utils/api';
+import api from '../../utils/api';
 
-export const ActionTypes = {
-  GET_ALL_THREADS: 'threads/getAllThreads',
-  ADD_THREAD: 'threads/addThread',
-  UP_VOTE_THREAD: 'threads/upVote',
-  DOWN_VOTE_THREAD: 'threads/downVote',
-  CLEAR_VOTE_THREAD: 'threads/clearVote',
+export const ActionType = {
+  GET_ALL_THREADS: 'GET_ALL_THREADS',
+  ADD_THREAD: 'ADD_THREAD',
+  UP_VOTE_THREAD: 'UP_VOTE_THREAD',
+  DOWN_VOTE_THREAD: 'DOWN_VOTE_THREAD',
+  NEUTRAL_VOTE_THREAD: 'NEUTRAL_VOTE_THREAD',
 };
 
-export const getAllThreadsActionsCreator = (threads) => ({
-  type: ActionTypes.GET_ALL_THREADS,
+export const getAllThreadsActionCreator = (threads) => ({
+  type: ActionType.GET_ALL_THREADS,
   payload: {
     threads,
   },
 });
 
-export const addThreadsActionsCreator = (thread) => ({
-  type: ActionTypes.ADD_THREAD,
+export const addThreadsActionCreator = (thread) => ({
+  type: ActionType.ADD_THREAD,
   payload: {
     thread,
   },
 });
 
-export const upVoteThreadActionsCreator = ({ threadId, userId }) => ({
-  type: ActionTypes.UP_VOTE_THREAD,
+export const upVoteThreadActionCreator = ({ threadId, userId }) => ({
+  type: ActionType.UP_VOTE_THREAD,
   payload: {
     threadId,
     userId,
   },
 });
 
-export const downVoteThreadActionsCreator = ({ threadId, userId }) => ({
-  type: ActionTypes.DOWN_VOTE_THREAD,
+export const downVoteThreadActionCreator = ({ threadId, userId }) => ({
+  type: ActionType.DOWN_VOTE_THREAD,
   payload: {
     threadId,
     userId,
   },
 });
 
-export const clearVoteThreadActionsCreator = ({ threadId, userId }) => ({
-  type: ActionTypes.CLEAR_VOTE_THREAD,
+export const neutralVoteThreadActionCreator = ({ threadId, userId }) => ({
+  type: ActionType.NEUTRAL_VOTE_THREAD,
   payload: {
     threadId,
     userId,
@@ -49,59 +49,59 @@ export const clearVoteThreadActionsCreator = ({ threadId, userId }) => ({
 export const asyncGetAllThreads = () => async (dispatch) => {
   try {
     const threads = await api.getAllThreads();
-    dispatch(getAllThreadsActionsCreator(threads));
+    dispatch(getAllThreadsActionCreator(threads));
   } catch (error) {
-    throw new Error(error.message);
+    console.error(error.message);
   }
 };
 
-export const asyncAddThread = ({ title, body, category }) => async (dispatch) => {
+export const asyncAddThread = ({ title, body, category = '' }) => async (dispatch) => {
   try {
     const thread = await api.createThread({ title, body, category });
-    dispatch(addThreadsActionsCreator(thread));
+    dispatch(addThreadsActionCreator(thread));
   } catch (error) {
-    throw new Error(error.message);
+    console.error(error.message);
   }
 };
 
 export const asyncUpVoteThread = (threadId) => async (dispatch, getState) => {
   const { authUser } = getState();
-  const prevState = { threadId, userId: authUser.id };
+  const voteType = 'up-vote';
 
-  dispatch(upVoteThreadActionsCreator({ threadId, userId: authUser.id }));
+  dispatch(upVoteThreadActionCreator({ threadId, userId: authUser.id }));
 
   try {
-    await api.upVoteThread(threadId);
-    dispatch(upVoteThreadActionsCreator(prevState));
+    await api.voteThread(threadId, voteType);
+    dispatch(upVoteThreadActionCreator({ threadId, userId: authUser.id }));
   } catch (error) {
-    throw new Error(error.message);
+    alert(error.message);
   }
 };
 
 export const asyncDownVoteThread = (threadId) => async (dispatch, getState) => {
   const { authUser } = getState();
-  const prevState = { threadId, userId: authUser.id };
+  const voteType = 'down-vote';
 
-  dispatch(downVoteThreadActionsCreator({ threadId, userId: authUser.id }));
+  dispatch(downVoteThreadActionCreator({ threadId, userId: authUser.id }));
 
   try {
-    await api.downVoteThread(threadId);
-    dispatch(downVoteThreadActionsCreator(prevState));
+    await api.voteThread(threadId, voteType);
+    dispatch(downVoteThreadActionCreator({ threadId, userId: authUser.id }));
   } catch (error) {
-    throw new Error(error.message);
+    alert(error.message);
   }
 };
 
-export const asyncClearVoteThread = (threadId) => async (dispatch, getState) => {
+export const asyncNeutralVoteThread = (threadId) => async (dispatch, getState) => {
   const { authUser } = getState();
-  const prevState = { threadId, userId: authUser.id };
+  const voteType = 'neutral-vote';
 
-  dispatch(clearVoteThreadActionsCreator({ threadId, userId: authUser.id }));
+  dispatch(neutralVoteThreadActionCreator({ threadId, userId: authUser.id }));
 
   try {
-    await api.clearVoteThread(threadId);
-    dispatch(clearVoteThreadActionsCreator(prevState));
+    await api.voteThread(threadId, voteType);
+    dispatch(neutralVoteThreadActionCreator({ threadId, userId: authUser.id }));
   } catch (error) {
-    throw new Error(error.message);
+    alert(error.message);
   }
 };
