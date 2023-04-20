@@ -4,7 +4,7 @@ import styled from 'styled-components';
 function Avatar({ src, alt, width }) {
   return (
     <AvatarWrapper>
-      <Image src={src} alt={alt} width={width} />
+      <Image src={src} alt={alt} width={width} loading="lazy" />
     </AvatarWrapper>
   );
 }

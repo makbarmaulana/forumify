@@ -1,11 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import Loadingbar from '../Styled/Loadingbar';
 
 function Header({ children }) {
   return (
-    <HeaderContainer>
-      {children}
-    </HeaderContainer>
+    <>
+      <HeaderContainer>
+        {children}
+      </HeaderContainer>
+      <Loadingbar />
+    </>
   );
 }
 

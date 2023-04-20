@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { asyncLogin } from '../states/authUser/action';
 import LoginForm from '../components/AuthForm/LoginForm';
+import Loadingbar from '../components/Styled/Loadingbar';
 
 function Loginpage() {
   const navigate = useNavigate();
@@ -15,17 +16,22 @@ function Loginpage() {
   };
 
   return (
-    <LoginContainer>
-      <LoginHeader>
-        <Title>
-          Hello,
-          <br />
-          Welcome Back
-        </Title>
-      </LoginHeader>
+    <>
+      <Loadingbar />
 
-      <LoginForm login={loginHandler} />
-    </LoginContainer>
+      <LoginContainer>
+        <LoginHeader>
+          <Title>
+            Hello,
+            <br />
+            Welcome Back
+          </Title>
+        </LoginHeader>
+
+        <LoginForm login={loginHandler} />
+      </LoginContainer>
+
+    </>
   );
 }
 
