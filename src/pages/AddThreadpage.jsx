@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { MainContainer } from '../components/Styled/MainContainer';
 import { asyncAddThread } from '../states/threads/actions';
+import MainContainer from '../components/Styled/MainContainer';
 import Header from '../components/Header/Header';
 import AppbarOther from '../components/Header/Appbar/AppbarOther';
 import AddThread from '../components/Threads/AddThread';

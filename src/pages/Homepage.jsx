@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { asyncPopulateStates } from '../states/shared/actions';
-import { MainContainer } from '../components/Styled/MainContainer';
-import { Button } from '../components/Styled/Button';
+import Button from '../components/Styled/Button';
+import asyncPopulateUsersAndThreads from '../states/shared/actions';
+import MainContainer from '../components/Styled/MainContainer';
 import Header from '../components/Header/Header';
 import AppbarHome from '../components/Header/Appbar/AppbarHome';
 import Category from '../components/Header/Categories/Category';
@@ -11,14 +11,14 @@ import Threads from '../components/Threads/Threads';
 import Navbar from '../components/Navigation/NavBar';
 
 function Homepage() {
-  const { threads = [], authUser, users } = useSelector((states) => states);
+  const { threads, authUser, users } = useSelector((states) => states);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [categoryKeyword, setCategoryKeyword] = useState('');
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(asyncPopulateStates());
+    dispatch(asyncPopulateUsersAndThreads());
   }, [dispatch]);
 
   const filteredThreads = threads
@@ -73,6 +73,7 @@ const ClearFilter = styled(Button)`
   background-color: #f2f2f2;
 
   &:hover {
+    color: inherit;
     background-color: #dedede;
   }
 `;

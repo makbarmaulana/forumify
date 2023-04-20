@@ -1,87 +1,104 @@
-import { ActionTypes } from './action';
+import { ActionType } from './action';
 
-export const threadDetailReducer = (threadDetail = null, action = {}) => {
+const threadDetailReducer = (threadDetail = null, action = {}) => {
+  const { threadId = null, commentId = null, userId = null } = action.payload ?? {};
+  const isThreadUpVoted = threadDetail?.upVotesBy.includes(userId);
+  const isThreadDownVoted = threadDetail?.downVotesBy.includes(userId);
+  const isCurrentComment = threadDetail?.comments.find((comment) => comment.id === commentId);
+  const isCommentUpVoted = isCurrentComment?.upVotesBy.includes(userId);
+  const isCommentDownVoted = isCurrentComment?.downVotesBy.includes(userId);
+
   switch (action.type) {
-    case ActionTypes.GET_THREAD_DETAIL:
+    case ActionType.GET_THREAD_DETAIL:
       return action.payload.threadDetail;
-    case ActionTypes.UP_VOTE_THREAD_DETAIL:
-      if (threadDetail.id === action.payload.threadId) {
+    case ActionType.UP_VOTE_THREAD_DETAIL:
+      // if not voted, add userId to array upVotesBy & delete userId from downVotesBy
+      if (threadDetail.id === threadId && !isThreadUpVoted) {
         return {
           ...threadDetail,
-          upVotesBy: threadDetail.upVotesBy.includes(action.payload.userId)
-            ? threadDetail.upVotesBy
-            : threadDetail.upVotesBy.concat(action.payload.userId),
-          downVotesBy: threadDetail.downVotesBy.filter((id) => id !== action.payload.userId),
+          upVotesBy: [userId, ...threadDetail.upVotesBy],
+          downVotesBy: threadDetail.downVotesBy.filter((id) => id !== userId),
         };
       }
       return threadDetail;
-    case ActionTypes.DOWN_VOTE_THREAD_DETAIL:
-      if (threadDetail.id === action.payload.threadId) {
+    case ActionType.DOWN_VOTE_THREAD_DETAIL:
+      // if not voted, add userId to array downVotesBy & delete userId from upVotesBy
+      if (threadDetail.id === threadId && !isThreadDownVoted) {
         return {
           ...threadDetail,
-          upVotesBy: threadDetail.upVotesBy.filter((id) => id !== action.payload.userId),
-          downVotesBy: threadDetail.downVotesBy.includes(action.payload.userId)
-            ? threadDetail.downVotesBy
-            : threadDetail.downVotesBy.concat(action.payload.userId),
+          upVotesBy: threadDetail.upVotesBy.filter((id) => id !== userId),
+          downVotesBy: [userId, ...threadDetail.downVotesBy],
         };
       }
       return threadDetail;
-    case ActionTypes.CLEAR_VOTE_THREAD_DETAIL:
-      if (threadDetail.id === action.payload.threadId) {
+    case ActionType.NEUTRAL_VOTE_THREAD_DETAIL:
+      // delete userId from upVotesBy or downVotesBy
+      if (threadDetail.id === threadId) {
         return {
           ...threadDetail,
-          upVotesBy: threadDetail.upVotesBy.filter((id) => id !== action.payload.userId),
-          downVotesBy: threadDetail.downVotesBy.filter((id) => id !== action.payload.userId),
+          upVotesBy: isThreadUpVoted
+            ? threadDetail.upVotesBy.filter((id) => id !== userId)
+            : threadDetail.upVotesBy,
+          downVotesBy: isThreadDownVoted
+            ? threadDetail.downVotesBy.filter((id) => id !== userId)
+            : threadDetail.downVotesBy,
         };
       }
       return threadDetail;
-    case ActionTypes.ADD_COMMENT:
+    case ActionType.ADD_COMMENT:
       return {
         ...threadDetail,
-        comments: threadDetail.comments.concat(action.payload.comment),
+        comments: [action.payload.comment, ...threadDetail.comments],
       };
-    case ActionTypes.UP_VOTE_COMMENT:
+    case ActionType.UP_VOTE_COMMENT:
       return {
         ...threadDetail,
         comments: threadDetail.comments.map((comment) => {
-          if (comment.id === action.payload.commentId) {
+          if (comment.id === commentId && !isCommentUpVoted) {
             return {
               ...comment,
-              upVotesBy: comment.upVotesBy.includes(action.payload.userId)
-                ? comment.upVotesBy
-                : comment.upVotesBy.concat(action.payload.userId),
-              downVotesBy: comment.downVotesBy.filter((id) => id !== action.payload.userId),
+              upVotesBy: [userId, ...comment.upVotesBy],
+              downVotesBy: comment.downVotesBy.filter((id) => id !== userId),
             };
           }
           return comment;
         }),
       };
-    case ActionTypes.DOWN_VOTE_COMMENT:
+    case ActionType.DOWN_VOTE_COMMENT:
       return {
         ...threadDetail,
         comments: threadDetail.comments.map((comment) => {
-          if (comment.id === action.payload.commentId) {
+          if (comment.id === commentId && !isCommentDownVoted) {
             return {
               ...comment,
-              upVotesBy: comment.upVotesBy.filter((id) => id !== action.payload.userId),
-              downVotesBy: comment.downVotesBy.includes(action.payload.userId)
-                ? comment.downVotesBy
-                : comment.downVotesBy.concat(action.payload.userId),
+              upVotesBy: comment.upVotesBy.filter((id) => id !== userId),
+              downVotesBy: [userId, ...comment.downVotesBy],
             };
           }
           return comment;
         }),
       };
-    case ActionTypes.CLEAR_VOTE_COMMENT:
+    case ActionType.NEUTRAL_VOTE_COMMENT:
       return {
         ...threadDetail,
-        comments: threadDetail.comments.map((comment) => ({
-          ...comment,
-          upVotesBy: comment.upVotesBy.filter((id) => id !== action.payload.userId),
-          downVotesBy: comment.downVotesBy.filter((id) => id !== action.payload.userId),
-        })),
+        comments: threadDetail.comments.map((comment) => {
+          if (comment.id === commentId) {
+            return {
+              ...comment,
+              upVotesBy: isCommentUpVoted
+                ? comment.upVotesBy.filter((id) => id !== userId)
+                : comment.upVotesBy,
+              downVotesBy: isCommentDownVoted
+                ? comment.downVotesBy.filter((id) => id !== userId)
+                : comment.downVotesBy,
+            };
+          }
+          return comment;
+        }),
       };
     default:
       return threadDetail;
   }
 };
+
+export default threadDetailReducer;

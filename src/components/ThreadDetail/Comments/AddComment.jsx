@@ -2,13 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { FiSend } from 'react-icons/fi';
 import { useDispatch } from 'react-redux';
-import { useInput } from '../../../hooks/useInput';
-import { Input } from '../../Styled/Input';
-import { Button } from '../../Styled/Button';
 import { asyncAddComment } from '../../../states/threadDetail/action';
+import useInput from '../../../hooks/useInput';
+import Input from '../../Styled/Input';
+import Button from '../../Styled/Button';
 import Avatar from '../../Styled/Avatar';
 
-function AddComment({ authUser, id: threadId }) {
+function AddComment({ threadDetail }) {
+  const { authUser, id: threadId } = threadDetail;
   const [content, onContentChange, setContent] = useInput('');
 
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ const AddCommentWrapper = styled.div`
   background-color: #fff;
   border-top: 1px solid #d6d6d6;
   z-index: 2;
-  // delete this
+  // mobile device
   width: 425px;
   margin: auto;
 `;

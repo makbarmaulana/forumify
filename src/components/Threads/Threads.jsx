@@ -6,7 +6,7 @@ function Threads({ threads }) {
   return (
     <ThreadList>
       {threads.map((thread) => (
-        <ThreadItem {...thread} key={thread.id} />
+        <ThreadItem thread={thread} key={thread.id} />
       ))}
     </ThreadList>
   );

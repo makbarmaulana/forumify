@@ -1,19 +1,17 @@
-import { api } from '../../utils/api';
-import { getAllUsersActionsCreator } from '../users/actions';
-import { getAllThreadsActionsCreator } from '../threads/actions';
-import { getLeaderboardsActionCreator } from '../leaderboards/action';
+import api from '../../utils/api';
+import { getAllUsersActionCreator } from '../users/actions';
+import { getAllThreadsActionCreator } from '../threads/actions';
 
-export const asyncPopulateStates = () => async (dispatch) => {
+const asyncPopulateUsersAndThreads = () => async (dispatch) => {
   try {
     const users = await api.getAllUsers();
-    dispatch(getAllUsersActionsCreator(users));
+    dispatch(getAllUsersActionCreator(users));
 
     const threads = await api.getAllThreads();
-    dispatch(getAllThreadsActionsCreator(threads));
-
-    const leaderboards = await api.getLeaderboards();
-    dispatch(getLeaderboardsActionCreator(leaderboards));
+    dispatch(getAllThreadsActionCreator(threads));
   } catch (error) {
     throw new Error(error.message);
   }
 };
+
+export default asyncPopulateUsersAndThreads;

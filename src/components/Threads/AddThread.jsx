@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from '../Styled/Button';
-import { Input } from '../Styled/Input';
-import { useInput } from '../../hooks/useInput';
+import Button from '../Styled/Button';
+import Input from '../Styled/Input';
+import useInput from '../../hooks/useInput';
 
 function AddThread({ addThread }) {
   const [title, onTitleChange] = useInput('');

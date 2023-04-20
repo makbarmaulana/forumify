@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { intToString } from '../../utils/intToString';
+import intToString from '../../utils/intToString';
 
 function VoteButton({
   icon, isVoted, label, onClick,

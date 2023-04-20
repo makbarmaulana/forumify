@@ -1,32 +1,32 @@
-import { api } from '../../utils/api';
+import api from '../../utils/api';
 
-export const ActionTypes = {
-  SET_AUTH_USER: 'authUser/setAuthUser',
-  REMOVE_AUTH_USER: 'authUser/removeAuthUser',
+export const ActionType = {
+  SET_AUTH_USER: 'SET_AUTH_USER',
+  REMOVE_AUTH_USER: 'REMOVE_AUTH_USER',
 };
 
 export const setAuthUserActionCreator = (authUser) => ({
-  type: ActionTypes.SET_AUTH_USER,
+  type: ActionType.SET_AUTH_USER,
   payload: {
     authUser,
   },
 });
 
 export const removeAuthUserActionCreator = () => ({
-  type: ActionTypes.REMOVE_AUTH_USER,
+  type: ActionType.REMOVE_AUTH_USER,
 });
 
-export const asyncLogin = (loginForm) => async (dispatch) => {
+export const asyncLogin = ({ email, password }) => async (dispatch) => {
   try {
-    const token = await api.login(loginForm);
+    const token = await api.login({ email, password });
     api.setAccessToken(token);
 
     const authUser = await api.getOwnProfile();
     dispatch(setAuthUserActionCreator(authUser));
+
+    alert(`Welcome back "${authUser.name}"!`);
   } catch (error) {
-    // api.removeAccessToken();
-    // dispatch(removeAuthUserActionCreator());
-    throw new Error(error.message);
+    console.error(error.message);
   }
 };
 
