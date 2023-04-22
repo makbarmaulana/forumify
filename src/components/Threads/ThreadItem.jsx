@@ -10,7 +10,7 @@ import {
   asyncDownVoteThread,
   asyncNeutralVoteThread,
   asyncUpVoteThread,
-} from '../../states/threads/actions';
+} from '../../states/threads/action';
 import postedAt from '../../utils/formatDate';
 import shareLink from '../../utils/shareLink';
 import Avatar from '../Styled/Avatar';

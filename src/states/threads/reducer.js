@@ -1,4 +1,4 @@
-import { ActionType } from './actions';
+import { ActionType } from './action';
 
 const threadsReducer = (threads = [], action = {}) => {
   const { userId = null, threadId = null } = action.payload ?? {};
