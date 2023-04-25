@@ -13,7 +13,7 @@ const asyncPopulateUsersAndThreads = () => async (dispatch) => {
     const threads = await api.getAllThreads();
     dispatch(getAllThreadsActionCreator(threads));
   } catch (error) {
-    throw new Error(error.message);
+    alert(error.message);
   }
 
   dispatch(hideLoading());

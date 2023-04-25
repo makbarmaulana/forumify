@@ -20,7 +20,7 @@ export const asyncPreloadProcess = () => async (dispatch) => {
     const authUser = await api.getOwnProfile();
     dispatch(setAuthUserActionCreator(authUser));
   } catch (error) {
-    console.error(error.message);
+    alert(error.message);
   } finally {
     dispatch(setIsPreloadActionCreator(false));
   }

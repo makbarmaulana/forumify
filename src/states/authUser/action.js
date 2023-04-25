@@ -15,6 +15,9 @@ export const setAuthUserActionCreator = (authUser) => ({
 
 export const removeAuthUserActionCreator = () => ({
   type: ActionType.REMOVE_AUTH_USER,
+  payload: {
+    authUser: null,
+  },
 });
 
 export const asyncLogin = ({ email, password }) => async (dispatch) => {
@@ -29,7 +32,7 @@ export const asyncLogin = ({ email, password }) => async (dispatch) => {
 
     alert(`Welcome back "${authUser.name}"!`);
   } catch (error) {
-    console.error(error.message);
+    alert(error.message);
   }
 
   dispatch(hideLoading());

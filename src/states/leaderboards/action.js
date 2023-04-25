@@ -19,7 +19,7 @@ export const asyncGetLeaderboards = () => async (dispatch) => {
     const leaderboards = await api.getLeaderboards();
     dispatch(getLeaderboardsActionCreator(leaderboards));
   } catch (error) {
-    console.error(error.message);
+    alert(error.message);
   }
 
   dispatch(hideLoading());

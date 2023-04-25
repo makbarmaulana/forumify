@@ -81,7 +81,7 @@ export const asyncGetThreadDetail = (threadId) => async (dispatch) => {
     const threadDetail = await api.getThreadDetail(threadId);
     dispatch(getThreadDetailActionCreator(threadDetail));
   } catch (error) {
-    console.error(error.message);
+    alert(error.message);
   }
 
   dispatch(hideLoading());
@@ -134,7 +134,7 @@ export const asyncAddComment = ({ threadId, content }) => async (dispatch) => {
     const comment = await api.createComment({ threadId, content });
     dispatch(addCommentActionCreator(comment));
   } catch (error) {
-    console.error(error.message);
+    alert(error.message);
   }
 };
 
