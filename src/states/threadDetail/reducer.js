@@ -1,10 +1,11 @@
 import { ActionType } from './action';
 
 const threadDetailReducer = (threadDetail = null, action = {}) => {
-  const { threadId = null, commentId = null, userId = null } = action.payload ?? {};
-  const isThreadUpVoted = threadDetail?.upVotesBy.includes(userId);
-  const isThreadDownVoted = threadDetail?.downVotesBy.includes(userId);
-  const isCurrentComment = threadDetail?.comments.find((comment) => comment.id === commentId);
+  const { threadId = null, commentId = null, userId = null } = action.payload || {};
+  const { upVotesBy = [], downVotesBy = [], comments = [] } = threadDetail || [];
+  const isThreadUpVoted = upVotesBy.includes(userId);
+  const isThreadDownVoted = downVotesBy.includes(userId);
+  const isCurrentComment = comments.find((comment) => comment.id === commentId);
   const isCommentUpVoted = isCurrentComment?.upVotesBy.includes(userId);
   const isCommentDownVoted = isCurrentComment?.downVotesBy.includes(userId);
 
@@ -46,9 +47,10 @@ const threadDetailReducer = (threadDetail = null, action = {}) => {
       }
       return threadDetail;
     case ActionType.ADD_COMMENT:
+      console.log(threadDetail);
       return {
         ...threadDetail,
-        comments: [action.payload.comment, ...threadDetail.comments],
+        comments: [...threadDetail.comments, action.payload.comment],
       };
     case ActionType.UP_VOTE_COMMENT:
       return {

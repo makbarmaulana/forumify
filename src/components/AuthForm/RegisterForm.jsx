@@ -89,7 +89,7 @@ function RegisterForm({ register }) {
           )}
         </PasswordWrapper>
         {errorMsg && (
-          <ErrorMessage>
+          <ErrorMessage id="errorMsg">
             The password confirmation doesn&apos;t match.
           </ErrorMessage>
         )}

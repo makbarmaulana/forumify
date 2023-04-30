@@ -19,7 +19,7 @@ export const asyncGetAllUsers = () => async (dispatch) => {
     const users = await api.getAllUsers();
     dispatch(getAllUsersActionCreator(users));
   } catch (error) {
-    console.error(error.message);
+    alert(error.message);
   }
 
   dispatch(hideLoading());
@@ -31,8 +31,8 @@ export const asyncRegister = ({ name, email, password }) => async (dispatch) => 
   try {
     await api.register({ name, email, password });
   } catch (error) {
-    console.error(error.message);
+    alert(error.message);
   }
 
-  dispatch(showLoading());
+  dispatch(hideLoading());
 };
