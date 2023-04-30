@@ -11,7 +11,7 @@ const api = {
   checkAccessToken: () => {
     const token = api.getAccessToken();
     if (!token) {
-      throw new Error('Unauthorized');
+      throw new Error('Invalid token structure');
     }
     return token;
   },
