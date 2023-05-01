@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { asyncRegister } from '../states/users/actions';
+import { asyncRegister } from '../states/users/action';
 import RegisterForm from '../components/AuthForm/RegisterForm';
+import Loadingbar from '../components/Styled/Loadingbar';
 
 function Registerpage() {
   const dispatch = useDispatch();
@@ -15,15 +16,20 @@ function Registerpage() {
   };
 
   return (
-    <RegisterContainer>
-      <RegisterHeader>
-        <Title>
-          Create an Account
-        </Title>
-      </RegisterHeader>
+    <>
+      <Loadingbar />
 
-      <RegisterForm register={registerHandler} />
-    </RegisterContainer>
+      <RegisterContainer>
+        <RegisterHeader>
+          <Title>
+            Create an Account
+          </Title>
+        </RegisterHeader>
+
+        <RegisterForm register={registerHandler} />
+      </RegisterContainer>
+
+    </>
   );
 }
 

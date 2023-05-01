@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../components/Styled/Button';
-import asyncPopulateUsersAndThreads from '../states/shared/actions';
+import asyncPopulateUsersAndThreads from '../states/shared/action';
 import MainContainer from '../components/Styled/MainContainer';
 import Header from '../components/Header/Header';
 import AppbarHome from '../components/Header/Appbar/AppbarHome';
