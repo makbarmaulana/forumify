@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import { act, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import {
   describe, expect, it, vi,
 } from 'vitest';
@@ -18,7 +18,7 @@ import LoginForm from './LoginForm';
 
 function WrappedLoginForm({ login }) {
   return (
-    <MemoryRouter>
+    <MemoryRouter initialEntries={['/login']}>
       <LoginForm login={login} />
     </MemoryRouter>
   );
@@ -26,35 +26,33 @@ function WrappedLoginForm({ login }) {
 
 describe('LoginInput component', () => {
   it('should handle email typing correctly', async () => {
-    await act(async () => render(<WrappedLoginForm />));
+    render(<WrappedLoginForm />);
     const emailField = screen.getByLabelText('Email Address');
 
-    await act(async () => userEvent.type(emailField, 'usertesting@mail.com'));
+    await userEvent.type(emailField, 'usertesting@mail.com');
 
     expect(emailField).toHaveValue('usertesting@mail.com');
   });
 
   it('should handle password typing correctly', async () => {
-    await act(async () => render(<WrappedLoginForm />));
+    render(<WrappedLoginForm />);
     const passwordField = screen.getByLabelText('Password');
 
-    await act(async () => userEvent.type(passwordField, 'usertesting'));
+    await userEvent.type(passwordField, 'usertesting');
 
     expect(passwordField).toHaveValue('usertesting');
   });
 
   it('should call login function when login button is clicked', async () => {
     const mockLogin = vi.fn();
-    await act(async () => render(<WrappedLoginForm login={mockLogin} />));
+    render(<WrappedLoginForm login={mockLogin} />);
     const emailField = screen.getByLabelText('Email Address');
     const passwordField = screen.getByLabelText('Password');
     const loginButton = screen.getByRole('button', { name: 'Login' });
 
-    await act(async () => {
-      await userEvent.type(passwordField, 'usertesting');
-      await userEvent.type(emailField, 'usertesting@mail.com');
-      await userEvent.click(loginButton);
-    });
+    await userEvent.type(passwordField, 'usertesting');
+    await userEvent.type(emailField, 'usertesting@mail.com');
+    await userEvent.click(loginButton);
 
     expect(mockLogin).toBeCalledWith({
       email: 'usertesting@mail.com',
