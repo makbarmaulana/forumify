@@ -1,7 +1,7 @@
 /**
- * Test scenario for RegisterForm component
+ * Test scenario for RegisterForm
  *
- * - RegisterForm component
+ * - RegisterForm component :
  *   - should handle username typing correctly
  *   - should handle email typing correctly
  *   - should handle password and confirm password typing correctly

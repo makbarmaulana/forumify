@@ -2,11 +2,11 @@
  * Test scenario for authUser action
  *
  * asyncLogin thunk :
- *   - should dispatch action correctly when API request is successful.
- *   - should dispatch action and call alert correctly when API request is fails.
+ *   - should Set Authed User correctly when API request is successful.
+ *   - should call alert correctly when API request is fails.
  *
  * asyncLogOut thunk :
- *   - should dispatch action correctly.
+ *   - should Remove Authed User correctly.
  */
 
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -52,7 +52,7 @@ describe('authUser action', () => {
   });
 
   describe('asyncLogin thunk', () => {
-    it('should dispatch action correctly when API request is successful', async () => {
+    it('should Set Authed User correctly when API request is successful', async () => {
       vi.spyOn(api, 'login').mockResolvedValue(token);
       vi.spyOn(api, 'getOwnProfile').mockResolvedValue(fakeAuthUser);
       const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
@@ -69,7 +69,7 @@ describe('authUser action', () => {
       expect(dispatch).toHaveBeenCalledWith(hideLoading());
     });
 
-    it('should dispatch action and call alert correctly when API request is fails', async () => {
+    it('should call alert correctly when API request is fails', async () => {
       vi.spyOn(api, 'login').mockRejectedValue(fakeError);
       const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
 
@@ -83,7 +83,7 @@ describe('authUser action', () => {
   });
 
   describe('asyncLogOut thunk', () => {
-    it('should dispatch action correctly', () => {
+    it('should Remove Authed User correctly', () => {
       const removeAccessTokenSpy = vi.spyOn(api, 'removeAccessToken').mockImplementation(() => {});
 
       asyncLogOut()(dispatch);

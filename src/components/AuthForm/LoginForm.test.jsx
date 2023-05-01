@@ -1,7 +1,7 @@
 /**
- * Test scenario for LoginForm component
+ * Test scenario for LoginForm
  *
- * - LoginForm component
+ * - LoginForm component :
  *   - should handle email typing correctly
  *   - should handle password typing correctly
  *   - should call login function when login button is clicked
