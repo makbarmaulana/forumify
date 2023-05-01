@@ -2,8 +2,8 @@
  * Test scenario for shared action
  *
  * asyncPopulateUsersAndThreads :
- *   - should dispatch action correctly when API request is successful.
- *   - should dispatch action and call alert correctly when API request is fails.
+ *   - should Get Users and Threads correctly when API request is successful.
+ *   - should call alert correctly when API request is fails.
  */
 
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -51,7 +51,7 @@ describe('asyncPopulateUsersAndThreads thunk', () => {
     vi.clearAllMocks();
   });
 
-  it('should dispatch action correctly when API request is successful.', async () => {
+  it('should Get Users and Threads correctly when API request is successful', async () => {
     vi.spyOn(api, 'getAllUsers').mockResolvedValue(fakeUsers);
     vi.spyOn(api, 'getAllThreads').mockResolvedValue(fakeThreads);
 
@@ -65,7 +65,7 @@ describe('asyncPopulateUsersAndThreads thunk', () => {
     expect(dispatch).toHaveBeenCalledWith(hideLoading());
   });
 
-  it('should dispatch action and call alert correctly when API request is fails', async () => {
+  it('should call alert correctly when API request is fails', async () => {
     vi.spyOn(api, 'getAllUsers').mockRejectedValue(fakeError);
     vi.spyOn(api, 'getAllThreads').mockRejectedValue(fakeError);
 

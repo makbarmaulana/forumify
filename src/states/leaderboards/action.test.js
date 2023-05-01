@@ -2,8 +2,8 @@
  * Test scenario for leaderboards action
  *
  * asyncGetLeaderboards thunk :
- *   - should dispatch action correctly when API request is successful.
- *   - should dispatch action and call alert correctly when API request is fails.
+ *   - should Get Leaderboards correctly when API request is successful.
+ *   - should call alert correctly when API request is fails.
  */
 
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -60,7 +60,7 @@ describe('Leaderboards action', () => {
     });
   });
 
-  it('should dispatch action and call alert correctly when API request is fails', async () => {
+  it('should call alert correctly when API request is fails', async () => {
     vi.spyOn(api, 'getLeaderboards').mockRejectedValue(fakeError);
     const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
 

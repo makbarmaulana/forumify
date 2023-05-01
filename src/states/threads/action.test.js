@@ -1,13 +1,21 @@
 /**
  * Test scenario for threads action
  *
- * asyncGetAllThreads thunk,
- * asyncAddThread thunk,
- * asyncUpVoteThread thunk,
- * asyncDownVoteThread thunk,
+ * asyncGetAllThreads thunk :
+ *   - should Get Threads correctly when API request is successful.
+ *   - should call alert correctly when API request is fails.
+ * asyncAddThread thunk :
+ *   - should Add Thread correctly when API request is successful.
+ *   - should call alert correctly when API request is fails.
+ * asyncUpVoteThread thunk :
+ *   - should Up Vote Thread correctly when API request is successful.
+ *   - should call alert correctly when API request is fails.
+ * asyncDownVoteThread thunk :
+ *   - should Down Vote Thread correctly when API request is successful.
+ *   - should call alert correctly when API request is fails.
  * asyncNeutralVoteThread thunk  :
- *   - should dispatch action correctly when API request is successful.
- *   - should dispatch action and call alert correctly when API request is fails.
+ *   - should Neutral Vote Thread correctly when API request is successful.
+ *   - should call alert correctly when API request is fails.
  */
 
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -62,7 +70,7 @@ describe('threads action', () => {
   });
 
   describe('asyncGetAllThreads thunk', () => {
-    it('should dispatch action correctly when API request is successful', async () => {
+    it('should Get Threads correctly when API request is successful', async () => {
       vi.spyOn(api, 'getAllThreads').mockResolvedValue(fakeThreads);
 
       await asyncGetAllThreads()(dispatch);
@@ -73,7 +81,7 @@ describe('threads action', () => {
       expect(dispatch).toHaveBeenCalledWith(hideLoading());
     });
 
-    it('should dispatch action and call alert correctly when API request is fails', async () => {
+    it('should call alert correctly when API request is fails', async () => {
       vi.spyOn(api, 'getAllThreads').mockRejectedValue(fakeError);
       const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
 
@@ -87,7 +95,7 @@ describe('threads action', () => {
   });
 
   describe('asyncAddThread thunk', () => {
-    it('should dispatch action correctly when API request is successful', async () => {
+    it('should Add Thread correctly when API request is successful', async () => {
       vi.spyOn(api, 'createThread').mockResolvedValue(fakeThreads);
 
       await asyncAddThread(fakeNewThread)(dispatch);
@@ -96,7 +104,7 @@ describe('threads action', () => {
       expect(dispatch).toHaveBeenCalledWith(addThreadActionCreator(fakeThreads));
     });
 
-    it('should dispatch action and call alert correctly when API request is fails', async () => {
+    it('should call alert correctly when API request is fails', async () => {
       vi.spyOn(api, 'createThread').mockRejectedValue(fakeError);
       const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
 
@@ -108,7 +116,7 @@ describe('threads action', () => {
   });
 
   describe('asyncUpVoteThread thunk', () => {
-    it('should dispatch action correctly when API request is successful', async () => {
+    it('should Up Vote Thread correctly when API request is successful', async () => {
       const threadId = 'thread-1';
       const authUser = { id: 'users-1' };
       const getState = () => ({ authUser });
@@ -124,7 +132,7 @@ describe('threads action', () => {
       expect(api.voteThread).toHaveBeenCalledWith(threadId, voteType);
     });
 
-    it('should dispatch action and call alert correctly when API request is fails', async () => {
+    it('should call alert correctly when API request is fails', async () => {
       const threadId = 'thread-1';
       const authUser = { id: 'users-1' };
       const getState = () => ({ authUser });
@@ -144,7 +152,7 @@ describe('threads action', () => {
   });
 
   describe('asyncDownVoteThread thunk', () => {
-    it('should dispatch action correctly when API request is successful', async () => {
+    it('should Down Vote Thread correctly when API request is successful', async () => {
       const threadId = 'thread-1';
       const authUser = { id: 'users-1' };
       const getState = () => ({ authUser });
@@ -160,7 +168,7 @@ describe('threads action', () => {
       expect(api.voteThread).toHaveBeenCalledWith(threadId, voteType);
     });
 
-    it('should dispatch action and call alert correctly when API request is fails', async () => {
+    it('should call alert correctly when API request is fails', async () => {
       const threadId = 'thread-1';
       const authUser = { id: 'users-1' };
       const getState = () => ({ authUser });
@@ -180,7 +188,7 @@ describe('threads action', () => {
   });
 
   describe('asyncNeutralVoteThread thunk', () => {
-    it('should dispatch action correctly when API request is successful', async () => {
+    it('should Neutral Vote Thread correctly when API request is successful', async () => {
       const threadId = 'thread-1';
       const authUser = { id: 'users-1' };
       const getState = () => ({ authUser });
@@ -196,7 +204,7 @@ describe('threads action', () => {
       expect(api.voteThread).toHaveBeenCalledWith(threadId, voteType);
     });
 
-    it('should dispatch action and call alert correctly when API request is fails', async () => {
+    it('should call alert correctly when API request is fails', async () => {
       const threadId = 'thread-1';
       const authUser = { id: 'users-1' };
       const getState = () => ({ authUser });
