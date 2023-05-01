@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import useInput from '../../hooks/useInput';
-import Input from '../Styled/Input';
-import Button from '../Styled/Button';
-import StyledLink from '../Styled/StyledLink';
+import Input from '../StyledComponent/Input';
+import Button from '../StyledComponent/Button';
+import StyledLink from '../StyledComponent/StyledLink';
 
 function RegisterForm({ register }) {
   const [name, onNameChange] = useInput('');
