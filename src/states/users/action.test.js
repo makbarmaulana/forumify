@@ -1,10 +1,12 @@
 /**
  * Test scenario for users action
  *
- * asyncGetAllUsers thunk,
+ * asyncGetAllUsers thunk :
+ *   - should Get All Users correctly when API request is successful.
+ *   - should call alert correctly when API request is fails.
  * asyncRegister thunk  :
- *   - should dispatch action correctly when API request is successful.
- *   - should dispatch action and call alert correctly when API request is fails.
+ *   - should Register correctly when API request is successful.
+ *   - should call alert correctly when API request is fails.
  */
 
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -45,7 +47,7 @@ describe('users action', () => {
   });
 
   describe('asyncGetAllUsers thunk', () => {
-    it('should dispatch action correctly when API request is successful', async () => {
+    it('should Get All Users correctly when API request is successful', async () => {
       vi.spyOn(api, 'getAllUsers').mockResolvedValue(fakeUsers);
 
       await asyncGetAllUsers()(dispatch);
@@ -56,7 +58,7 @@ describe('users action', () => {
       expect(dispatch).toHaveBeenCalledWith(hideLoading());
     });
 
-    it('should dispatch action and call alert correctly when API request is fails', async () => {
+    it('should call alert correctly when API request is fails', async () => {
       vi.spyOn(api, 'getAllUsers').mockRejectedValue(fakeError);
       const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
 
@@ -69,7 +71,7 @@ describe('users action', () => {
     });
   });
 
-  it('should dispatch action correctly when API request is successful', async () => {
+  it('should Register correctly when API request is successful', async () => {
     vi.spyOn(api, 'register').mockRejectedValue(fakeError);
     const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
 
@@ -81,7 +83,7 @@ describe('users action', () => {
     expect(dispatch).toHaveBeenCalledWith(hideLoading());
   });
 
-  it('should dispatch action and call alert correctly when API request is fails', async () => {
+  it('should call alert correctly when API request is fails', async () => {
     vi.spyOn(api, 'register').mockRejectedValue(fakeError);
     const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
 

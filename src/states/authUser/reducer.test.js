@@ -2,7 +2,7 @@
  * Test scenario for authUserReducer
  *
  * - should return initial state when given by unknown action
- * - should return authed User when given by SET_AUTH_USER action
+ * - should return Authed User when given by SET_AUTH_USER action
  * - should return null when given by REMOVE_AUTH_USER action
  */
 

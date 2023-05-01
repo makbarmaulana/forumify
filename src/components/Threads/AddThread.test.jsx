@@ -1,11 +1,10 @@
 /**
- * Test scenario for AddThread component
+ * Test scenario for AddThread
  *
- * - AddThread component
+ * - AddThread component :
  *   - should handle title typing correctly
  *   - should handle category typing correctly
  *   - should handle body typing correctly
- *   - should call create function when "Tambahkan" button is clicked
  *   - should call addThread function when ADD button is clicked
  */
 

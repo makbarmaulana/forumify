@@ -2,8 +2,8 @@
  * Test scenario for isPreload action
  *
  * asyncPreloadProcess thunk :
- *   - should dispatch action correctly when API request is successful.
- *   - should dispatch action correctly when API request is fails
+ *   - should Get Authed User and Set IsPreload to false when API request is successful.
+ *   - should Remove Authed User and Set IsPreload to false when API request is fails.
  */
 
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -35,7 +35,7 @@ describe('isPreload action', () => {
   });
 
   describe('asyncPreloadProcess thunk', () => {
-    it('should dispatch action correctly when API request is successful', async () => {
+    it('should Get Authed User and Set IsPreload to false when API request is successful', async () => {
       vi.spyOn(api, 'getOwnProfile').mockResolvedValue(fakeAuthUser);
 
       await asyncPreloadProcess()(dispatch);
@@ -47,7 +47,7 @@ describe('isPreload action', () => {
       expect(dispatch).toHaveBeenCalledWith(hideLoading());
     });
 
-    it('should dispatch action correctly when API request is fails', async () => {
+    it('should Remove Authed User and Set IsPreload to false when API request is fails', async () => {
       vi.spyOn(api, 'getOwnProfile').mockRejectedValue(fakeError);
 
       await asyncPreloadProcess()(dispatch);

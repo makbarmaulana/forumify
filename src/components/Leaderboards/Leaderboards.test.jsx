@@ -1,10 +1,10 @@
 /**
-
-Test scenario for Leaderboards component
-Leaderboards component
-should render the title correctly
-should render the user list correctly
-*/
+ * Test scenario for Leaderboards
+ *
+ * - Leaderboards component :
+ *   - should render the title correctly
+ *   - should render the user list correctly
+ */
 
 import React from 'react';
 import { render, screen } from '@testing-library/react';
